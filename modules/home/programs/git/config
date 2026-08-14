@@ -1,7 +1,7 @@
 [user]
-	name = Harsh Sahu
-	email = yesh8harsh+github@gmail.com
-	signingkey = /home/plancton/.ssh/github_signing_key.pub
+	name = Plancton
+	email = [EMAIL_ADDRESS]
+	signingkey = [ENCRYPTION_KEY]
 
 [core]
   compression = 9
@@ -13,16 +13,11 @@
   pushNonFastForward = false
   statusHints = false
 
-[url "git@github.com:plancton/"]
+[url "git@github.com:Plancton-sko/"]
   insteadOf = "plancton:"
-[url "git@github.com:singularityworks-xyz/"]
-  insteadOf = "sw:"
-
-[url "git@github.com:zephverse/"]
-  insteadOf = "zv:"
 
 [init]
-  defaultBranch = dev
+  defaultBranch = master
 
 [status]
   branch = true
@@ -72,7 +67,7 @@
 	forceSignAnnotated = true
 
 [commit]
-	gpgsign = true
+	gpgsign = false 
 
 [gpg "ssh"]
 	program = ssh-keygen

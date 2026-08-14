@@ -55,9 +55,7 @@
       url = "github:nix-community/disko";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    sops-nix = {
-      url = "github:mic92/sops-nix";
-    };
+
     hermes-agent = {
       url = "github:NousResearch/hermes-agent";
     };

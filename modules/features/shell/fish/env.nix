@@ -40,7 +40,7 @@
           # -- Wabi Theme System --
           set -Ux WABI_DOTFILES_DIR "$HOME/doty"
           set -Ux WABI_VM_SCAN_ROOT "$HOME/secondary/virtuals"
-          set -Ux WABI_GITHUB_USER "plancton"
+          set -Ux WABI_GITHUB_USER "Plancton-sko"
           set -Ux WABI_PRESETS_DIR "$HOME/doty/wabi/presets"
 
           # -- Anthropic/Claude Code Configuration --
@@ -52,19 +52,7 @@
           set -gx CLAUDE_CODE_SUBAGENT_MODEL "deepseek-v4-flash"
           set -gx CLAUDE_CODE_EFFORT_LEVEL "max"
 
-          # -- SOPS Decrypted Environment Variables --
-          if test -f /run/secrets/context7-api-key
-              set -gx CONTEXT7_API_KEY (cat /run/secrets/context7-api-key)
-          end
-          if test -f /run/secrets/modal-api-key
-              set -gx MODAL_API_KEY (cat /run/secrets/modal-api-key)
-          end
-          if test -f /run/secrets/anthropic-auth-token
-              set -gx ANTHROPIC_AUTH_TOKEN (cat /run/secrets/anthropic-auth-token)
-          end
-          if test -f /run/secrets/github-token
-              set -gx GITHUB_PERSONAL_ACCESS_TOKEN (cat /run/secrets/github-token)
-          end
+
         '';
       };
     };

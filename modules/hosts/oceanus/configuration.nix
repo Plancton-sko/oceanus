@@ -8,7 +8,6 @@
         self.nixosModules.oceanusDisko
         self.nixosModules.oceanusVirtualization
         inputs.home-manager.nixosModules.home-manager
-        inputs.sops-nix.nixosModules.sops
         self.nixosModules.oceanusPackagesDesktop
         self.nixosModules.oceanusPackagesDev
         self.nixosModules.oceanusPackagesCli
@@ -85,22 +84,7 @@
         "L /usr/share/applications - - - - /run/current-system/sw/share/applications"
       ];
 
-      # -- SOPS --
-      # TODO: Uncomment after generating age keys and encrypting secrets.yaml
-      # sops.defaultSopsFile = ../../../secrets/secrets.yaml;
-      # sops.age.keyFile = "${config.users.users.plancton.home}/.config/sops/age/keys.txt";
-      # sops.secrets.github-token = {
-      #   path = "/run/secrets/github-token";
-      #   owner = config.users.users.plancton.name;
-      #   group = "users";
-      #   mode = "0400";
-      # };
-      # sops.secrets.cloudflare-api-token = {
-      #   path = "/run/secrets/cloudflare-api-token";
-      #   owner = config.users.users.plancton.name;
-      #   group = "users";
-      #   mode = "0400";
-      # };
+
 
 
       system.stateVersion = "26.05";

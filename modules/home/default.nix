@@ -14,29 +14,7 @@
         useUserPackages = true;
         backupFileExtension = "bak";
         users.plancton = { config, pkgs, ... }: {
-          imports = [
-            inputs.sops-nix.homeManagerModules.sops
-          ];
-
-          # -- SOPS: Add your own API keys here when needed --
-          # To activate: add the key to secrets/secrets.yaml via `sops secrets/secrets.yaml`
-          # then uncomment the block below and run `doty` to rebuild.
-          sops = {
-            defaultSopsFile = ../../secrets/secrets.yaml;
-            age.keyFile = "/home/plancton/.config/sops/age/keys.txt";
-            # secrets.anthropic-auth-token = { };
-            # templates."claude-settings" = {
-            #   content = ''
-            #     {
-            #       "theme": "auto",
-            #       "env": {
-            #         "ANTHROPIC_AUTH_TOKEN": "${config.sops.placeholder.anthropic-auth-token}"
-            #       }
-            #     }
-            #   '';
-            #   path = "${config.home.homeDirectory}/.claude/settings.json";
-            # };
-          };
+          imports = [ ];
 
           home = {
             username = "plancton";
