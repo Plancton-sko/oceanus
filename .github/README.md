@@ -1,0 +1,185 @@
+<div align="center">
+
+  <a href="https://github.com/parazeeknova/doty">
+    <img src="https://cdn.przknv.cc/doty/doty-banner.png" alt="homescreen" width="99%">
+  </a>
+
+</div>
+
+<br />
+
+<a id="what"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=WHAT?" width="450"/>
+
+Doty is a highly opinionated, fully [declarative](https://nix.dev/manual/nix/2.28/), and reproducible [NixOS](https://nixos.org/manual/nixos/stable/#preface) - [Hyprland](https://wiki.hypr.land) configuration that provides a complete desktop environment with pre-configured applications, services, and workflows. It is designed to be easy to install and maintain, while also being flexible enough to allow for customization and extension. I use it on my personal machine and it is tailored to my workflow, but it can be adapted to suit other users' needs as well. It is a work in progress and I am constantly improving it.
+
+It has custom daemons [wabi](https://github.com/parazeeknova/doty/tree/main/wabi), keys, [widgets](https://github.com/parazeeknova/doty/tree/main/modules/features/wm/quickshell), launchers and services out-of-the-box. It is designed to be efficient and lightweight, while also providing a modern and visually appealing desktop environment. It is also designed to be modular and extensible, allowing users to easily add or remove components as needed all done in qml & rust.
+
+This repository supports two setups depending on the branch:
+- **[NixOS Setup (main branch)](https://github.com/parazeeknova/doty/tree/main)** (Current): A fully declarative system-level and user-level configuration powered by Nix flakes, NixOS modules, and Home Manager.
+This contains latest changes as i've moved to NixOS.
+
+- **[Arch Linux Setup (arch-dots branch)](https://github.com/parazeeknova/doty/tree/arch-dots)** (Legacy): A GNU Stow-based, distro-agnostic configuration tailored for Arch-based distributions.
+
+<br />
+
+<a id="features"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=FEATURES" width="450"/>
+
+- `[Core]` **Declarative & Reproducible**: Powered by Nix Flakes and Home Manager to ensure your environment is fully reproducible across installations.
+- `[Setup]` **Everything Configured**: Fully customized daemons, keys, widgets, popups, launchers and services out-of-the-box, nix magic. *Yo arch so fat, when she tried to clone this, AUR servers went straight into swap memory.*
+- `[AI]` **AI-Powered (Local) Workflows**: Out-of-the-box integrations for local OCR, Speech-to-Text (STT), and LLMs.
+- `[UI]` **Animated Wallpaper**: Automatically change your wallpaper based on time of day or system events or put an video.
+- `[Utils]` **Screen Time & Focus Mode**: Track your screen time and enable focus mode to block distractions.
+- `[Dev]` **Virtualization Maxx**: Waydroid, Droidbox(ubuntu, fedora, etc), VMware, Qemu/Libvirt all preconfigured for development.
+- `[Theme]` **Matugen Dynamic Theming**: Colors dynamically generated from your active wallpaper to keep your workspace fresh and cohesive.
+- `[Layout]` **Horizontal Scrolling Layout**: Slide through workspace layers in a smooth horizontal layout.
+- `[Design]` **Liquid Glass Aesthetics**: Modern, translucent, and blurred glassmorphism so clean you'll try to wipe your greasy fingerprints off the screen.
+- `[Opinion]` **Highly Opinionated**: Built with a curated layout and toolchain designed for efficiency for developers.
+- `[Widgets]` **Quickshell Popups**: Instant control panels, system sliders, and toggles right at your fingertips.
+- `[System]` **Under the Hood Nix Magic**: Lockfiles ensuring package version consistency across updates.
+- `[Perf]` **Resource Efficient**: Tailored to run light on system resources.
+- `[Modular]` **Modular & Extensible**: Easily add or remove components to suit your workflow.
+- `[Admin]` **Cockpit Integration**: Seamless integration with Cockpit for system management & instant logs.
+- And much more...
+
+<br />
+
+<a id="installation"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=INSTALLATION" width="450"/>
+
+The installation script is designed for a minimal [NixOS](https://nixos.org/manual/nixos/stable/#preface) install with a single user. It will automatically set up the system and user configurations, including all necessary packages, services, and settings, the old Arch Linux setup is still available in the [arch-dots branch](https://github.com/parazeeknova/doty/tree/arch-dots) but the support for it has been discontinued.
+
+>[!IMPORTANT]
+> This is a highly opinionated setup, and it is recommended to use it on a fresh NixOS installation & is very big and will take a lot of time to install, so please be patient. It is not recommended to use this on a production machine or a machine with important data. Also before running make sure to check your device related configuration.
+
+To install, execute the following commands:
+
+```shell
+git clone --depth 1 https://github.com/parazeeknova/doty
+cd ~/doty
+sudo nixos-rebuild switch --flake .#apostrophe
+```
+
+>[!TIP]
+> After one time installation, there is a handy alias `doty` to update the system and user configuration with a single command. Just run `doty` in the terminal.
+
+<br />
+
+<a id="updates"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=UPDATES" width="450"/>
+
+I frequently update the configuration with new features, bug fixes, and improvements. To update your installation, simply run the following command:
+
+```shell
+cd ~/doty
+git pull
+doty # Assuming you have the alias set up, otherwise run `sudo nixos-rebuild switch --flake .#apostrophe`
+```
+
+<br />
+
+<a id="secrets"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=SECRETS%20%26%20SOPS" width="450"/>
+
+Doty manages personal system credentials and API tokens securely using [sops-nix](https://github.com/mic92/sops-nix) and [age](https://github.com/FiloSottile/age) encryption. Secrets are encrypted locally and committed safely to GitHub, so only your authorized machine can decrypt them.
+
+This configuration encrypts:
+* **Mail Accounts**: Credentials for the push notification daemon (`mail_notifier`).
+* **GitHub API Token**: Personal access token to pull repository metadata in the Quickshell app launcher.
+
+### Guide: How to configure secrets for your own setup
+
+If you are cloning this repository for your own machine, you will need to set up your own encrypted secrets:
+
+#### 1. Generate a new Age keypair
+First, generate a local private key on your machine. This key **must remain local** (never committed to Git):
+```shell
+mkdir -p ~/.config/sops/age
+nix shell nixpkgs#age -c age-keygen -o ~/.config/sops/age/keys.txt
+```
+Take note of the printed public key (starts with `age1...`).
+
+#### 2. Update `.sops.yaml`
+Modify the public key defined in [`.sops.yaml`](file:///.sops.yaml) at the root of the repository with the public key you generated:
+```yaml
+keys:
+  - &primary <your_public_key_here>
+creation_rules:
+  - path_regex: secrets/.*\.yaml$
+    key_groups:
+      - age:
+          - *primary
+```
+
+#### 3. Create your unencrypted YAML file
+Create a temporary file `secrets/temp_unencrypted.yaml` containing your email credentials and GitHub token:
+```yaml
+mail-accounts: |
+  [
+    {
+      "email": "your_email@gmail.com",
+      "password": "your_app_password"
+    }
+  ]
+github-token: |
+  ghp_your_github_token_here
+```
+
+#### 4. Encrypt it using SOPS
+Encrypt your secrets into the tracked file path `secrets/secrets.yaml` (which is committed to Git) and delete the temporary file:
+```shell
+nix shell nixpkgs#sops -c sops --encrypt secrets/temp_unencrypted.yaml > secrets/secrets.yaml
+rm secrets/temp_unencrypted.yaml
+```
+
+#### 5. Rebuild your system
+Apply the new configuration:
+```shell
+sudo nixos-rebuild switch --flake .#apostrophe
+```
+
+<br />
+
+<a id="preview"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=PREVIEW" width="450"/>
+
+![Preview](https://cdn.przknv.cc/doty/anime.png)
+
+| | | | |
+| :---: | :---: | :---: | :---: |
+| **App Launcher**<br><img src="https://cdn.przknv.cc/doty/app-launcher.png" width="250"> | **Battery**<br><img src="https://cdn.przknv.cc/doty/battery.png" width="250"> | **Brightness**<br><img src="https://cdn.przknv.cc/doty/brightness.png" width="250"> | **Emoji**<br><img src="https://cdn.przknv.cc/doty/emoji.png" width="250"> |
+| **GitHub**<br><img src="https://cdn.przknv.cc/doty/github.png" width="250"> | **Media**<br><img src="https://cdn.przknv.cc/doty/media.png" width="250"> | **Podman**<br><img src="https://cdn.przknv.cc/doty/podman.png" width="250"> | **Clipboard**<br><img src="https://cdn.przknv.cc/doty/clipboard.png" width="250"> |
+| **System Info**<br><img src="https://cdn.przknv.cc/doty/system.png" width="250"> | **Virtualization**<br><img src="https://cdn.przknv.cc/doty/virtual.png" width="250"> | **Wi-Fi**<br><img src="https://cdn.przknv.cc/doty/wifi.png" width="250"> | **Waydroid**<br><img src="https://cdn.przknv.cc/doty/waydroid.png" width="250"> |
+| **Wallpaper Switcher**<br><img src="https://cdn.przknv.cc/doty/wallpaper-switcher.png" width="250"> | **Control Center**<br><img src="https://cdn.przknv.cc/doty/control-center.png" width="250"> | **Color Schemes**<br><img src="https://cdn.przknv.cc/doty/color-scheme.png" width="250"> | **Screen Capture**<br><img src="https://cdn.przknv.cc/doty/screencapture.png" width="250"> |
+
+<br />
+
+<a id="themes"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=THEMES" width="450"/>
+
+| | | | |
+| :---: | :---: | :---: | :---: |
+| ![Preview 17](https://cdn.przknv.cc/doty/t1.png) | ![Preview 18](https://cdn.przknv.cc/doty/t2.png) | ![Preview 19](https://cdn.przknv.cc/doty/t3.png) | ![Preview 20](https://cdn.przknv.cc/doty/t4.png) |
+
+![Preview](https://cdn.przknv.cc/doty/wabi.png)
+
+All application adopt the color scheme based on the current wallpaper. Here are some previews of different wallpapers and their corresponding dynamic themes.
+
+<br />
+
+<a id="credits"></a>
+<img src="https://readme-typing-svg.herokuapp.com?font=Lexend+Giga&size=25&pause=1000&color=686c5b&vCenter=true&width=435&height=25&lines=CREDITS" width="450"/>
+
+- **[NixOS](https://nixos.org/) & [Nix](https://nixos.org/manual/nix/stable/)** - The foundation of this system, providing a purely functional, declarative package management system & nice docs for [cuda](https://wiki.nixos.org/wiki/CUDA), [nvidia](https://wiki.nixos.org/wiki/NVIDIA), [qemu](https://wiki.nixos.org/wiki/QEMU) & etc.
+- **[Hyprland](https://hyprland.org/)** - A highly customizable, dynamic tiling Wayland compositor with fluid animations.
+- **[Quickshell](https://github.com/outfoxxed/quickshell)** - Framework used to build the responsive, QML-based desktop shell widgets and popups.
+- **[Matugen](https://github.com/InioAsano/matugen)** - The color generation tool that dynamically extracts Material You themes from wallpapers.
+- **[Waydroid](https://github.com/pioner14/Waydroid_on_NixOS)** - Waydroid configuration for nixOS on Hyprland.
+- **[HyDE Project](https://github.com/hyde-project/hyde)** - Very good project for Hyprland configuration and scripts.
+- **[Zen-Wabi](https://github.com/parazeeknova/zen-wabi)** - Matugen-driven dynamic theme for Zen Browser wallpaper-aware, per-site, hot-reloadable themes.
+- And many other open-source projects and libraries that make this configuration like these possible.
+
+<br />
+
+This project is licensed under the MIT & Do whatever the fu* you want license. 

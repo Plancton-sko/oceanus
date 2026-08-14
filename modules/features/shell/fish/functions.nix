@@ -1,0 +1,106 @@
+{ self, inputs, ... }: {
+
+  flake.nixosModules.planctonFishFunctions =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+
+      home-manager.users.plancton.programs.fish = {
+        functions = {
+          hyprctl = {
+            wraps = "hyprctl";
+            body = "env -u LD_LIBRARY_PATH (command -s hyprctl) $argv";
+          };
+          fish_greeting = {
+            body = "";
+          };
+
+          __history_previous_command = {
+            body = ''
+              switch (commandline -t)
+                  case "!"
+                      commandline -t $history[1]
+                      commandline -f repaint
+                  case "*"
+                      commandline -i !
+              end
+            '';
+          };
+          __history_previous_command_arguments = {
+            body = ''
+              switch (commandline -t)
+                  case "!"
+                      commandline -t ""
+                      commandline -f history-token-search-backward
+                  case "*"
+                      commandline -i '$'
+              end
+            '';
+          };
+          history = {
+            wraps = "history";
+            body = "builtin history --show-time='%F %T '";
+          };
+          backup = {
+            body = "cp $argv[1] $argv[1].bak";
+          };
+          copy = {
+            body = ''
+              set count (count $argv | tr -d \\n)
+              if test "$count" = 2; and test -d "$argv[1]"
+                  set from (echo $argv[1] | trim-right /)
+                  set to (echo $argv[2])
+                  command cp -r $from $to
+              else
+                  command cp $argv
+              end
+            '';
+          };
+          gl = {
+            body = "git log --all --graph --pretty=format:'%C(magenta)%h %C(white) %an %ar%C(auto) %D%n%s%n'";
+          };
+          gc = {
+            body = ''
+              if test (count $argv) -eq 0
+                  git commit
+              else
+                  git commit -m (string join " " $argv)
+              end
+              echo
+              git status --short
+            '';
+          };
+          gac = {
+            body = ''
+              git add .
+              git status --short
+              echo -n "Commit message: "
+              read msg
+              if test -n "$msg"
+                  git commit -m "$msg"
+                  git push
+              else
+                  echo "Cancelled: Commit message cannot be empty."
+              end
+            '';
+          };
+          lcc = {
+            body = "/home/plancton/doty/modules/scripts/lcc $argv";
+          };
+        };
+        interactiveShellInit = ''
+          if [ "$fish_key_bindings" = fish_vi_key_bindings ]
+              bind -Minsert ! __history_previous_command
+              bind -Minsert '$' __history_previous_command_arguments
+          else
+              bind ! __history_previous_command
+              bind '$' __history_previous_command_arguments
+          end
+        '';
+      };
+    };
+}

@@ -1,0 +1,45 @@
+# host/oceanus/virtualization.nix
+{ self, ... }: {
+  flake.nixosModules.oceanusVirtualization =
+    { config, pkgs, lib, ... }:
+    {
+      virtualisation.containers.enable = true;
+      virtualisation = {
+        podman = {
+          enable = true;
+          dockerCompat = true;
+          defaultNetwork.settings.dns_enabled = true;
+        };
+        libvirtd = {
+          enable = true;
+          qemu = {
+            package = pkgs.qemu_kvm;
+            runAsRoot = true;
+            swtpm.enable = true;
+          };
+        };
+      };
+
+      programs.virt-manager.enable = true;
+
+      systemd.services.libvirtd-default-network = {
+        description = "Autostart libvirt default network";
+        after = [ "libvirtd.service" ];
+        requires = [ "libvirtd.service" ];
+        wantedBy = [ "multi-user.target" ];
+        serviceConfig = {
+          Type = "oneshot";
+          ExecStart = "${pkgs.bash}/bin/bash -c '${pkgs.libvirt}/bin/virsh net-start default || true; ${pkgs.libvirt}/bin/virsh net-autostart default || true'";
+        };
+      };
+
+      environment.systemPackages = with pkgs; [
+        dive
+        podman-tui
+        podman-desktop
+        podman-compose
+        distrobox
+        libvirt
+      ];
+    };
+}

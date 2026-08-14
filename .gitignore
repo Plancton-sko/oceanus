@@ -1,0 +1,48 @@
+node_modules
+__pycache__
+
+# -- Quickshell state and DB files (now under modules/features/wm) --
+modules/features/wm/quickshell/osd/state.json
+modules/features/wm/quickshell/battery_popup/history.json
+modules/features/wm/quickshell/battery_popup/settings.json
+modules/features/wm/quickshell/media_popup/assets.db
+modules/features/wm/quickshell/media_popup/flags.json
+modules/features/wm/quickshell/media_popup/ping.txt
+modules/features/wm/quickshell/media_popup/settings.json
+modules/features/wm/quickshell/notif_popup/screentime.db
+modules/features/wm/quickshell/notif_popup/screentime.db-shm
+modules/features/wm/quickshell/notif_popup/screentime.db-wal
+modules/features/wm/quickshell/media_popup/assets.db-wal
+modules/features/wm/quickshell/media_popup/assets.db-shm
+modules/features/wm/quickshell/apps_popup/launcher.db
+modules/features/wm/quickshell/apps_popup/launcher.db-shm
+modules/features/wm/quickshell/apps_popup/launcher.db-wal
+
+.config/gtk-3.0/bookmarks
+
+# -- Zen Browser Profiles --
+modules/features/applications/zen/u7b24p71.Default Profile/
+modules/features/applications/zen/Profile Groups/
+modules/features/applications/zen/installs.ini
+modules/features/applications/zen/profiles.ini
+
+ref/
+vm_password
+vm_guest_credentials
+thunar-pkg/
+build/
+
+# -- Global DB/runtime ignores --
+*.db
+*.db-shm
+*.db-wal
+
+# -- Voxtype models --
+.voxtype/
+voxtype_models/
+*.bin
+*.onnx
+
+result/
+squashfs-temp
+asar-unpacked

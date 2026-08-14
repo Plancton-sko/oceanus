@@ -1,0 +1,71 @@
+{ self, inputs, ... }: {
+
+  flake.nixosModules.planctonFish =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+      imports = [
+        self.nixosModules.planctonFishEnv
+        self.nixosModules.planctonFishAliases
+        self.nixosModules.planctonFishFunctions
+      ];
+
+      programs.fish.enable = true;
+
+      home-manager.users.plancton.programs.fish = {
+        enable = true;
+        plugins = with pkgs.fishPlugins; [
+          {
+            name = "fzf";
+            src = fzf.src;
+          }
+          {
+            name = "done";
+            src = done.src;
+          }
+          {
+            name = "puffer";
+            src = puffer.src;
+          }
+          {
+            name = "sponge";
+            src = sponge.src;
+          }
+          {
+            name = "autopair";
+            src = autopair.src;
+          }
+        ];
+        interactiveShellInit = ''
+          starship init fish | source
+          zoxide init --cmd cd fish | source
+
+          if not set -q TMUX
+              alias tmu="tmux new-session -A -s monkie"
+          end
+        '';
+        shellInit = ''
+          # Start Hyprland via uwsm on tty1 login
+          if status is-login
+              if test (tty) = /dev/tty1
+                  if not set -q HYPRLAND_INSTANCE_SIGNATURE
+                      if command -v uwsm >/dev/null 2>&1
+                          exec uwsm start hyprland-uwsm.desktop
+                      else
+                          exec Hyprland
+                      end
+                  end
+              end
+          end
+
+          if test -f ~/.fish_profile
+              source ~/.fish_profile
+          end
+        '';
+      };
+    };
+}
