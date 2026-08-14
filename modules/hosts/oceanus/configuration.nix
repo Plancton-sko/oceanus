@@ -75,6 +75,17 @@
       nixpkgs.config.allowUnfree = true;
       programs.nix-ld.enable = true;
 
+      # -- Display Manager / Graphical Login (Greetd + Tuigreet) --
+      services.greetd = {
+        enable = true;
+        settings = {
+          default_session = {
+            command = "${pkgs.greetd.tuigreet}/bin/tuigreet --time --asterisks --remember --cmd 'uwsm start hyprland-uwsm.desktop'";
+            user = "greeter";
+          };
+        };
+      };
+
       nixpkgs.overlays = [
         inputs.vscode-insiders.overlays.default
       ];
