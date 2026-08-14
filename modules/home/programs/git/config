@@ -14,7 +14,7 @@
   statusHints = false
 
 [url "git@github.com:plancton/"]
-  insteadOf = "planc:"
+  insteadOf = "plancton:"
 [url "git@github.com:singularityworks-xyz/"]
   insteadOf = "sw:"
 
