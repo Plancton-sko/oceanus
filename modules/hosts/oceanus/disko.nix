@@ -9,10 +9,23 @@
 
       disko.enableConfig = lib.mkDefault true;
 
+      # -- Swap file (1GB) via tmpfiles, no swapDevices needed --
+      systemd.tmpfiles.rules = [
+        "f /swap/swapfile 0600 root root - -"
+      ];
+      swapDevices = [
+        {
+          device = "/swap/swapfile";
+          size = 1024; # MB
+        }
+      ];
+
       disko.devices = {
         disk = {
           main = {
             type = "disk";
+            # ATENÇÃO: altere para /dev/nvme0n1 se o seu SSD for NVMe M.2
+            # Rode `lsblk` no terminal da live ISO para confirmar o nome do disco.
             device = "/dev/sda";
             content = {
               type = "gpt";
@@ -27,23 +40,16 @@
                     mountOptions = [ "fmask=0077" "dmask=0077" ];
                   };
                 };
-                luks-root = {
+                root = {
                   size = "100%";
                   content = {
-                    type = "luks";
-                    name = "luks-oceanus-root";
-                    settings = {
-                      allowDiscards = true;
-                    };
-                    content = {
-                      type = "btrfs";
-                      extraArgs = [ "-f" ];
-                      subvolumes = {
-                        "/root" = { mountpoint = "/"; };
-                        "/home" = { mountpoint = "/home"; };
-                        "/nix" = { mountpoint = "/nix"; };
-                        "/swap" = { mountpoint = "/swap"; };
-                      };
+                    type = "btrfs";
+                    extraArgs = [ "-f" ];
+                    subvolumes = {
+                      "/root" = { mountpoint = "/"; };
+                      "/home" = { mountpoint = "/home"; };
+                      "/nix"  = { mountpoint = "/nix"; };
+                      "/swap" = { mountpoint = "/swap"; mountOptions = [ "noatime" ]; };
                     };
                   };
                 };
