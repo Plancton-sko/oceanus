@@ -52,7 +52,7 @@ fi
 # 5. Execute Disko Partitioning and Mounts
 echo -e "\n${YELLOW}[3/5] Particionando o disco com Disko...${NC}"
 nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
-  --mode disko "$DISKO_CONFIG"
+  --mode disko --flake "$SCRIPT_DIR#$TARGET_HOST"
 echo -e "${GREEN}✓ Particionamento Btrfs e montagens em /mnt concluídos.${NC}\n"
 
 # 6. Copy Dotfiles to /mnt

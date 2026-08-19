@@ -1,5 +1,5 @@
 # host/oceanus/disko.nix
-{ self, inputs, ... }: {
+{ self ? { nixosModules = { }; }, inputs ? { }, ... }: {
   flake.nixosModules.oceanusDisko =
     { config, lib, ... }:
     {
