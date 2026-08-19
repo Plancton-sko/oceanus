@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 
 let
-  repo = "/home/plancton/doty";
+  repo = "/home/plancton/oceanus";
   nvimDir = "${repo}/modules/features/shell/nvim/config";
 in
 {

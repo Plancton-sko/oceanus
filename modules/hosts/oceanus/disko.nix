@@ -24,8 +24,6 @@
         disk = {
           main = {
             type = "disk";
-            # ATENÇÃO: altere para /dev/nvme0n1 se o seu SSD for NVMe M.2
-            # Rode `lsblk` no terminal da live ISO para confirmar o nome do disco.
             device = "/dev/sda";
             content = {
               type = "gpt";

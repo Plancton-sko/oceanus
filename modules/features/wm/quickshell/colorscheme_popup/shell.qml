@@ -46,8 +46,8 @@ Scope {
         root.currentWallpaperPath = path;
         root.currentThemeMode = "wallpaper";
         // set_wallpaper first (sets the visible wallpaper), then theme_switcher (matugen from the same file).
-        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/set_wallpaper", path]);
-        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/theme_switcher", "wallpaper", path, root.colorschemeMode]);
+        Quickshell.execDetached([root.homeDir + "/oceanus/modules/scripts/set_wallpaper", path]);
+        Quickshell.execDetached([root.homeDir + "/oceanus/modules/scripts/theme_switcher", "wallpaper", path, root.colorschemeMode]);
         Quickshell.execDetached(["sh", "-c", "printf %s \"$1\" > " + root.homeDir + "/.cache/last_wallpaper", "sh", path]);
     }
 
@@ -169,7 +169,7 @@ Scope {
     function setColorschemeMode(mode) {
         root.colorschemeMode = mode;
         if (root.currentThemeMode === "wallpaper" && root.currentWallpaperPath !== "") {
-            Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/theme_switcher", "wallpaper", root.currentWallpaperPath, mode]);
+            Quickshell.execDetached([root.homeDir + "/oceanus/modules/scripts/theme_switcher", "wallpaper", root.currentWallpaperPath, mode]);
         } else {
             Quickshell.execDetached(["sh", "-c", "mkdir -p " + root.homeDir + "/.cache/quickshell && printf %s \"" + mode + "\" > " + root.homeDir + "/.cache/quickshell/colorscheme_mode"]);
         }
@@ -179,7 +179,7 @@ Scope {
     FileView {
         id: presetsDirWatcher
 
-        path: "file://" + root.homeDir + "/doty/wabi/presets"
+        path: "file://" + root.homeDir + "/oceanus/wabi/presets"
         watchChanges: true
         onFileChanged: presetsLister.running = true
         onLoaded: presetsLister.running = true
@@ -219,7 +219,7 @@ Scope {
     Process {
         id: presetsLister
 
-        command: [root.homeDir + "/doty/modules/scripts/presets_lister"]
+        command: [root.homeDir + "/oceanus/modules/scripts/presets_lister"]
         running: false
 
         stdout: StdioCollector {
@@ -398,7 +398,7 @@ Scope {
                                 } else {
                                     var p = root.presets[root.presetFocusIndex - 1];
                                     if (p) {
-                                        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/theme_switcher", "preset", p.name]);
+                                        Quickshell.execDetached([root.homeDir + "/oceanus/modules/scripts/theme_switcher", "preset", p.name]);
                                         win.closePopup();
                                     }
                                 }
@@ -941,7 +941,7 @@ Scope {
                                             root.lastFocus = "preset";
                                             root.currentThemeMode = "preset";
                                             root.currentThemeValue = modelData.name;
-                                            Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/theme_switcher", "preset", modelData.name]);
+                                            Quickshell.execDetached([root.homeDir + "/oceanus/modules/scripts/theme_switcher", "preset", modelData.name]);
                                             win.closePopup();
                                         }
                                     }
@@ -1112,7 +1112,7 @@ Scope {
                                 enabled: root.currentWallpaperPath.endsWith(".mp4") || root.currentWallpaperPath.endsWith(".webm")
                                 opacity: enabled ? 1.0 : 0.4
                                 onClicked: {
-                                    Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/toggle_wallpaper_pause"]);
+                                    Quickshell.execDetached([root.homeDir + "/oceanus/modules/scripts/toggle_wallpaper_pause"]);
                                 }
 
                                 Row {

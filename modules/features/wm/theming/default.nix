@@ -2,7 +2,7 @@
 
 let
   themeDir = ./.;
-  repo = "/home/plancton/doty";
+  repo = "/home/plancton/oceanus";
   theming = "${repo}/modules/features/wm/theming";
 in
 {

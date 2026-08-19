@@ -1002,7 +1002,7 @@ pub fn parse_binds<P: AsRef<Path>>(filepath: P) -> io::Result<Vec<Category>> {
 fn main() {
     let dotfiles = std::env::var("WABI_DOTFILES_DIR").unwrap_or_else(|_| {
         let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".to_string());
-        format!("{home}/doty")
+        format!("{home}/oceanus")
     });
     let binds_file = format!("{dotfiles}/modules/features/wm/hyprland/hypr/modules/binds.lua");
     let args: Vec<String> = std::env::args().collect();

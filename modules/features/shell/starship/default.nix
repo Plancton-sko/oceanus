@@ -17,9 +17,9 @@
 
         xdg.configFile = {
           "starship.toml".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/shell/starship/starship.toml";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/shell/starship/starship.toml";
           "starship.toml.template".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/shell/starship/starship.toml.template";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/shell/starship/starship.toml.template";
         };
       };
     };

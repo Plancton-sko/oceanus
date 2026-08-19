@@ -12,7 +12,7 @@ HOME = Path.home()
 MODELS_DIR = HOME / "Models"
 CACHE_DIR = HOME / ".cache" / "huggingface" / "hub"
 MODELS_JSON_PRIMARY = HOME / ".pi" / "agent" / "models.json"
-MODELS_JSON_DOTY = HOME / "doty" / "modules/features/llms/models.json"
+MODELS_JSON_DOTY = HOME / "oceanus" / "modules/features/llms/models.json"
 
 # ANSI Colors
 GREEN = "\033[1;32m"

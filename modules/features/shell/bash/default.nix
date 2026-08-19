@@ -13,8 +13,8 @@
         enable = true;
         shellAliases = {
           # -- NixOS --
-          doty = "cd ~/doty && make rebuild";
-          dotes = "cd ~/doty && sudo nixos-rebuild test --flake .#oceanus";
+          doty = "cd ~/oceanus && make rebuild";
+          dotes = "cd ~/oceanus && sudo nixos-rebuild test --flake .#oceanus";
           nfu = "nix flake update";
           nfc = "nix flake check";
           nfsh = "nix flake show";

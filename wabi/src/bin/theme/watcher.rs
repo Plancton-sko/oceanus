@@ -94,7 +94,7 @@ fn watch_dirs() -> Vec<PathBuf> {
             .collect();
     }
 
-    vec![home_dir().join("doty/modules/backgrounds")]
+    vec![home_dir().join("oceanus/modules/backgrounds")]
 }
 
 fn is_supported_wallpaper(path: &Path) -> bool {

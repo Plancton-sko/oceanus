@@ -30,7 +30,7 @@
         "npx",
         "-y",
         "@modelcontextprotocol/server-filesystem",
-        "/home/plancton/doty",
+        "/home/plancton/oceanus",
         "/home/plancton/Repository",
         "home/plancton/Projects",
         "/home/plancton"

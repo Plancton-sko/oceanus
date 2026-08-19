@@ -89,7 +89,7 @@
             '';
           };
           lcc = {
-            body = "/home/plancton/doty/modules/scripts/lcc $argv";
+            body = "/home/plancton/oceanus/modules/scripts/lcc $argv";
           };
         };
         interactiveShellInit = ''

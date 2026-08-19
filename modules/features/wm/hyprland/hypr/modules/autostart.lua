@@ -6,7 +6,7 @@
 -- Or execute your favorite apps at launch like this:
 --
 
-local dotfiles = os.getenv("WABI_DOTFILES_DIR") or (os.getenv("HOME") .. "/doty")
+local dotfiles = os.getenv("WABI_DOTFILES_DIR") or (os.getenv("HOME") .. "/oceanus")
 
 hl.on("hyprland.start", function()
 	-- System Startups

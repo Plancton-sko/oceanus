@@ -96,7 +96,7 @@ fn get_services_status() -> Vec<ServiceItem> {
     ]
 }
 
-const STAT_DIR: &str = "/tmp/.doty_disk_stats";
+const STAT_DIR: &str = "/tmp/.oceanus_disk_stats";
 
 fn now_nanos() -> u64 {
     SystemTime::now()

@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 
 let
-  repo = "/home/plancton/doty";
+  repo = "/home/plancton/oceanus";
   pickerDir = "${repo}/modules/features/wm/hyprland-preview-share-picker";
 in
 {

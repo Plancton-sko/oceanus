@@ -11,9 +11,7 @@
 
       home-manager.users.plancton.programs.fish = {
         shellInit = ''
-          # -- Locale --
-          set -gx LANG en_US.UTF-8
-          set -gx LC_ALL en_US.UTF-8
+          # -- Environment --
           set -gx DIRENV_LOG_FORMAT ""
 
           # -- SSH / GPG --
@@ -38,10 +36,10 @@
           fish_add_path /home/plancton/.mimocode/bin
 
           # -- Wabi Theme System --
-          set -Ux WABI_DOTFILES_DIR "$HOME/doty"
+          set -Ux WABI_DOTFILES_DIR "$HOME/oceanus"
           set -Ux WABI_VM_SCAN_ROOT "$HOME/secondary/virtuals"
           set -Ux WABI_GITHUB_USER "Plancton-sko"
-          set -Ux WABI_PRESETS_DIR "$HOME/doty/wabi/presets"
+          set -Ux WABI_PRESETS_DIR "$HOME/oceanus/wabi/presets"
 
           # -- Anthropic/Claude Code Configuration --
           set -gx ANTHROPIC_BASE_URL "https://api.deepseek.com/anthropic"

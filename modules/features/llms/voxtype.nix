@@ -15,7 +15,7 @@
 
       home-manager.users.plancton = { config, ... }: {
         xdg.configFile."voxtype/config.toml".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/llms/voxtype/config.toml";
+          config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/llms/voxtype/config.toml";
 
         systemd.user.services.voxtype = {
           Unit = {

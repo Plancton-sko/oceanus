@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 
 let
-  repo = "/home/plancton/doty";
+  repo = "/home/plancton/oceanus";
   tmuxDir = "${repo}/modules/features/shell/tmux";
 in
 {

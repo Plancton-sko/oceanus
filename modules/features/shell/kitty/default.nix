@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 
 let
-  repo = "/home/plancton/doty";
+  repo = "/home/plancton/oceanus";
   kittyDir = "${repo}/modules/features/shell/kitty";
 in
 {

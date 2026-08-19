@@ -16,9 +16,9 @@
 
         xdg.configFile = {
           "cava/config".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/shell/cava/config";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/shell/cava/config";
           "cava/config.template".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/shell/cava/config.template";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/shell/cava/config.template";
         };
       };
     };

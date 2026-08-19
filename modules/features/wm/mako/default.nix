@@ -16,9 +16,9 @@
 
         xdg.configFile = {
           "mako/config".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/mako/config";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/mako/config";
           "mako/config.template".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/mako/config.template";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/mako/config.template";
         };
       };
     };

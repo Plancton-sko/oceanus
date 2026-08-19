@@ -4,7 +4,7 @@
 local mainMod = "SUPER"
 local terminal = "uwsm app -- ghostty"
 local fileManager = "uwsm app -- thunar"
-local dotfiles = os.getenv("WABI_DOTFILES_DIR") or (os.getenv("HOME") .. "/doty")
+local dotfiles = os.getenv("WABI_DOTFILES_DIR") or (os.getenv("HOME") .. "/oceanus")
 local osdctl = os.getenv("HOME") .. "/.config/quickshell/osd/bin/osdctl"
 
 ---------------------
@@ -263,7 +263,7 @@ hl.bind(
 	)
 )
 
-hl.bind(mainMod .. " + ALT + A", hl.dsp.exec_cmd("$HOME/doty/modules/scripts/toggle_waydroid"))
+hl.bind(mainMod .. " + ALT + A", hl.dsp.exec_cmd("$HOME/oceanus/modules/scripts/toggle_waydroid"))
 
 ---------------------
 ---    Old Rofi   ---
@@ -368,7 +368,7 @@ hl.bind(
 		"quickshell -c notif_popup ipc call notif_popup close || env QS_KEYBOARD=1 quickshell --config notif_popup"
 	)
 )
-hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("$HOME/doty/modules/scripts/theme_switcher --toggle-glass"))
+hl.bind(mainMod .. " + SHIFT + O", hl.dsp.exec_cmd("$HOME/oceanus/modules/scripts/theme_switcher --toggle-glass"))
 hl.bind(
 	mainMod .. " + O",
 	hl.dsp.window.set_prop({
@@ -391,7 +391,7 @@ hl.bind(
 		"quickshell -c wallpaper_switcher ipc call wallpaper_switcher close || quickshell --config wallpaper_switcher"
 	)
 )
-hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("$HOME/doty/modules/scripts/toggle_wallpaper_pause"))
+hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("$HOME/oceanus/modules/scripts/toggle_wallpaper_pause"))
 hl.bind(
 	mainMod .. " + ALT + C",
 	hl.dsp.exec_cmd(

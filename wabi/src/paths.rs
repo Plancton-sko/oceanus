@@ -24,5 +24,5 @@ pub fn cache_dir() -> PathBuf {
 pub fn dotfiles_dir() -> PathBuf {
     env::var_os("WABI_DOTFILES_DIR")
         .map(PathBuf::from)
-        .unwrap_or_else(|| home_dir().join("doty"))
+        .unwrap_or_else(|| home_dir().join("oceanus"))
 }

@@ -1,7 +1,7 @@
 { self, inputs, ... }:
 
 let
-  repo = "/home/plancton/doty";
+  repo = "/home/plancton/oceanus";
   pyprDir = "${repo}/modules/features/wm/pypr";
 in
 {

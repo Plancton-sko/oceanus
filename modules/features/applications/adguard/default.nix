@@ -18,8 +18,7 @@
         settings = {
           dns = {
             bind_hosts = [
-              "127.0.0.1"
-              "100.72.83.48"
+              "0.0.0.0"
             ];
             port = 53;
             upstream_dns = [
@@ -37,13 +36,6 @@
           };
         };
       };
-
-      # Update existing AdGuardHome.yaml if generated during initial failed attempt
-      systemd.services.adguardhome.preStart = lib.mkAfter ''
-        if [ -f /var/lib/AdGuardHome/AdGuardHome.yaml ]; then
-          ${pkgs.gnused}/bin/sed -i 's/- 0\.0\.0\.0/- 127.0.0.1\n    - 100.72.83.48/' /var/lib/AdGuardHome/AdGuardHome.yaml || true
-        fi
-      '';
 
       # Disable systemd-resolved DNS stub listener so AdGuard Home can bind to port 53
       services.resolved = {

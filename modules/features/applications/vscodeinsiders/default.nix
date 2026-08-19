@@ -14,7 +14,7 @@
         { config, pkgs, ... }:
         let
           inherit (config.lib.file) mkOutOfStoreSymlink;
-          repo = "${config.home.homeDirectory}/doty";
+          repo = "${config.home.homeDirectory}/oceanus";
           vscodeInsidersDir = "${repo}/modules/features/applications/vscodeinsiders";
         in
         {

@@ -31,10 +31,10 @@
           cfoff = "warp-cli disconnect";
 
           # -- File Listing (eza) --
-          ls = "exa --color=auto --icons";
-          la = "exa -la --color=auto --icons";
-          ll = "exa -alh --color=auto --icons";
-          lt = "exa -a --tree --color=auto --icons";
+          ls = "eza --color=auto --icons";
+          la = "eza -la --color=auto --icons";
+          ll = "eza -alh --color=auto --icons";
+          lt = "eza -a --tree --color=auto --icons";
           dir = "dir --color=auto";
           vdir = "vdir --color=auto";
 
@@ -88,9 +88,10 @@
           dkcr = "docker compose restart";
 
           # -- Nix --
-          doty = "cd ~/doty && make rebuild";
-          dotes = "cd ~/doty && sudo nixos-rebuild test --flake .#oceanus";
-          flake = "cd ~/doty && sudo nixos-rebuild switch --flake .#oceanus";
+          doty = "cd ~/oceanus && make rebuild";
+          oceanus = "cd ~/oceanus && make rebuild";
+          dotes = "cd ~/oceanus && sudo nixos-rebuild test --flake .#oceanus";
+          flake = "cd ~/oceanus && sudo nixos-rebuild switch --flake .#oceanus";
           nfu = "nix flake update";
           nfc = "nix flake check";
           nfsh = "nix flake show";

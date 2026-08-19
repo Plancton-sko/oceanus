@@ -16,9 +16,9 @@
 
         xdg.configFile = {
           "bat/config".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/shell/bat/config";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/shell/bat/config";
           "bat/themes".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/shell/bat/themes";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/shell/bat/themes";
         };
       };
     };

@@ -70,13 +70,13 @@
           };
 
           home.file.".pi/agent/models.json".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/llms/models.json";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/llms/models.json";
 
           home.file.".hermes/config.yaml".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/llms/hermes-config.yaml";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/llms/hermes-config.yaml";
 
           home.file.".hermes/SOUL.md".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/llms/hermes-SOUL.md";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/llms/hermes-SOUL.md";
 
           xdg.dataFile."applications/hermes.desktop" = {
             # The Hermes desktop app rewrites its own .desktop entry on every

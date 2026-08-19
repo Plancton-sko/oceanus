@@ -8,7 +8,7 @@
       ...
     }:
     let
-      stackDir = "/home/plancton/doty/modules/features/llms/hermes-stack";
+      stackDir = "/home/plancton/oceanus/modules/features/llms/hermes-stack";
       envFile = "/run/secrets/hermes-stack-env";
       podmanCompose = "${pkgs.podman-compose}/bin/podman-compose";
     in

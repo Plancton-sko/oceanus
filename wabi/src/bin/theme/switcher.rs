@@ -176,7 +176,7 @@ fn default_palette() -> HashMap<String, String> {
 
 fn load_preset_palette(name: &str) -> Option<HashMap<String, String>> {
     let path = home_dir()
-        .join("doty/wabi/presets")
+        .join("oceanus/wabi/presets")
         .join(format!("{}.toml", name));
 
     let content = fs::read_to_string(&path).ok()?;
@@ -618,7 +618,7 @@ fn main() {
     let palette = match mode.as_str() {
         "preset" => load_preset_palette(&value).unwrap_or_else(|| {
             eprintln!(
-                "Unknown preset '{}': no file at ~/doty/wabi/presets/{}.toml",
+                "Unknown preset '{}': no file at ~/oceanus/wabi/presets/{}.toml",
                 value, value
             );
             std::process::exit(1);
@@ -640,7 +640,7 @@ fn main() {
     };
 
     let vars = build_vars(&palette);
-    let doty = home_dir().join("doty");
+    let doty = home_dir().join("oceanus");
 
     // Write colors.json and Colors.qml early so QuickShell picks up new colors
     // immediately, before slow operations (papirus-folders, make sync, bat cache).

@@ -81,21 +81,21 @@
         xdg.configFile = {
           "hypr/hypridle.conf".source = ./hypr/hypridle.conf;
           "hypr/hyprlock.conf".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/hyprland/hypr/hyprlock.conf";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/hyprland/hypr/hyprlock.conf";
           "hypr/hyprlock.conf.template".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/hyprland/hypr/hyprlock.conf.template";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/hyprland/hypr/hyprlock.conf.template";
           "hypr/hyprsunset.conf".source = ./hypr/hyprsunset.conf;
           "hypr/modules".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/hyprland/hypr/modules";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/hyprland/hypr/modules";
           "hypr/sunset.state".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/hyprland/hypr/sunset.state";
+            config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/hyprland/hypr/sunset.state";
           "hypr/xdph.conf".source = ./hypr/xdph.conf;
           "uwsm/env".source = "${config.home.sessionVariablesPackage}/etc/profile.d/hm-session-vars.sh";
         };
 
         # -- Quickshell Config --
         xdg.configFile."quickshell".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/quickshell";
+          config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/quickshell";
       };
     };
 }

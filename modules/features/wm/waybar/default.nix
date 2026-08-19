@@ -11,7 +11,7 @@
 
       home-manager.users.plancton = { config, ... }: {
         xdg.configFile."waybar".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/plancton/doty/modules/features/wm/waybar";
+          config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/waybar";
       };
     };
 }
