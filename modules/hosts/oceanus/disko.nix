@@ -24,7 +24,7 @@
         disk = {
           main = {
             type = "disk";
-            device = "/dev/sda";
+            device = "/dev/disk/by-id/ata-WDC_WDS240G2G0A-00JH30_202117800658";
             content = {
               type = "gpt";
               partitions = {
