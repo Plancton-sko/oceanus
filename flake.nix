@@ -3,8 +3,7 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
     hyprland = {
-      type = "git";
-      url = "https://github.com/hyprwm/Hyprland?submodules=1";
+      url = "git+https://github.com/hyprwm/Hyprland?submodules=1";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 

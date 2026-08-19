@@ -72,31 +72,38 @@ echo -e "${YELLOW}[5/6] Preparando SSD para compilação (evitar OOM)...${NC}"
 # Redirect Nix build temp dir to SSD instead of RAM-backed tmpfs
 BUILD_TMPDIR="/mnt/tmp/nix-build"
 mkdir -p "$BUILD_TMPDIR"
+chmod 1777 "$BUILD_TMPDIR"
 export TMPDIR="$BUILD_TMPDIR"
 export TEMP="$BUILD_TMPDIR"
 export TMP="$BUILD_TMPDIR"
-echo -e "${GREEN}✓ TMPDIR redirecionado para o SSD ($BUILD_TMPDIR)${NC}"
 
-# Create a temporary swap file on SSD for extra safety (Btrfs requires NOCOW)
+# Force background nix-daemon to also use SSD for downloading & extracting
+echo -e "  Configurando nix-daemon para usar o SSD ($BUILD_TMPDIR)..."
+systemctl stop nix-daemon.service nix-daemon.socket 2>/dev/null || true
+systemctl set-environment TMPDIR="$BUILD_TMPDIR" TEMP="$BUILD_TMPDIR" TMP="$BUILD_TMPDIR" 2>/dev/null || true
+systemctl start nix-daemon.service 2>/dev/null || true
+echo -e "${GREEN}✓ nix-daemon redirecionado para o SSD ($BUILD_TMPDIR)${NC}"
+
+# Create a temporary swap file of 12G on SSD for extra safety (Btrfs requires NOCOW)
 SWAPFILE="/mnt/swapfile.tmp"
-echo -e "  Criando swap temporário de 4G no SSD..."
+echo -e "  Criando swap temporário de 12G no SSD..."
 rm -f "$SWAPFILE"
 if command -v btrfs >/dev/null 2>&1 && btrfs filesystem mkswapfile --help >/dev/null 2>&1; then
-  btrfs filesystem mkswapfile -s 4G "$SWAPFILE"
+  btrfs filesystem mkswapfile -s 12G "$SWAPFILE"
 else
   truncate -s 0 "$SWAPFILE"
   chattr +C "$SWAPFILE" 2>/dev/null || true
   chmod 600 "$SWAPFILE"
-  dd if=/dev/zero of="$SWAPFILE" bs=1M count=4096 status=progress 2>&1
+  dd if=/dev/zero of="$SWAPFILE" bs=1M count=12288 status=progress 2>&1
   mkswap "$SWAPFILE" >/dev/null 2>&1
 fi
 swapon "$SWAPFILE"
-echo -e "${GREEN}✓ Swap temporário ativado (4 GiB no SSD)${NC}\n"
+echo -e "${GREEN}✓ Swap temporário ativado (12 GiB no SSD)${NC}\n"
 
 # 8. Execute NixOS Install
 echo -e "${YELLOW}[6/6] Instalando NixOS (Flake: .#$TARGET_HOST)...${NC}"
 cd "$DEST_DIR"
-nixos-install --flake ".#$TARGET_HOST" --no-root-passwd
+nixos-install --flake ".#$TARGET_HOST" --no-root-passwd --option max-jobs 2 --option cores 2
 echo -e "${GREEN}✓ Instalação do NixOS concluída com sucesso!${NC}\n"
 
 # Cleanup: remove temporary swap and build dir
