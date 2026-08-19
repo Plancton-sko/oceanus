@@ -25,7 +25,7 @@ TARGET_HOST="oceanus"
 DISKO_CONFIG="$SCRIPT_DIR/modules/hosts/oceanus/disko.nix"
 
 # 3. Internet connectivity check
-echo -e "${YELLOW}[1/5] Verificando conexão com a internet...${NC}"
+echo -e "${YELLOW}[1/6] Verificando conexão com a internet...${NC}"
 if ! ping -c 1 -W 3 nixos.org >/dev/null 2>&1; then
   echo -e "${RED}Erro: Sem conexão com a internet. Conecte-se via 'nmtui' e tente novamente.${NC}"
   exit 1
@@ -39,7 +39,7 @@ if [ -z "$TARGET_DISK" ]; then
   TARGET_DISK="/dev/disk/by-id/ata-WDC_WDS240G2G0A-00JH30_202117800658"
 fi
 
-echo -e "${YELLOW}[2/5] Confirmação de Segurança:${NC}"
+echo -e "${YELLOW}[2/6] Confirmação de Segurança:${NC}"
 echo -e "O instalador irá formatar e particionar o disco: ${RED}$TARGET_DISK${NC}"
 echo -e "${RED}ATENÇÃO: TODOS OS DADOS NESTE DISCO SERÃO APAGADOS!${NC}\n"
 
@@ -50,13 +50,13 @@ if [ "$CONFIRM" != "sim" ]; then
 fi
 
 # 5. Execute Disko Partitioning and Mounts
-echo -e "\n${YELLOW}[3/5] Particionando o disco com Disko...${NC}"
+echo -e "\n${YELLOW}[3/6] Particionando o disco com Disko...${NC}"
 nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
   --mode disko --flake "$SCRIPT_DIR#$TARGET_HOST"
 echo -e "${GREEN}✓ Particionamento Btrfs e montagens em /mnt concluídos.${NC}\n"
 
 # 6. Copy Dotfiles to /mnt
-echo -e "${YELLOW}[4/5] Copiando arquivos do repositório para o sistema alvo...${NC}"
+echo -e "${YELLOW}[4/6] Copiando arquivos do repositório para o sistema alvo...${NC}"
 DEST_DIR="/mnt/home/$TARGET_USER/oceanus"
 mkdir -p "$DEST_DIR"
 cp -a "$SCRIPT_DIR/." "$DEST_DIR/"
@@ -66,13 +66,38 @@ git config --global --add safe.directory "$DEST_DIR" || true
 
 echo -e "${GREEN}✓ Arquivos copiados para $DEST_DIR.${NC}\n"
 
-# 7. Execute NixOS Install
-echo -e "${YELLOW}[5/5] Instalando NixOS (Flake: .#$TARGET_HOST)...${NC}"
+# 7. Prepare SSD for build (avoid OOM — live ISO uses tmpfs for /tmp)
+echo -e "${YELLOW}[5/6] Preparando SSD para compilação (evitar OOM)...${NC}"
+
+# Redirect Nix build temp dir to SSD instead of RAM-backed tmpfs
+BUILD_TMPDIR="/mnt/tmp/nix-build"
+mkdir -p "$BUILD_TMPDIR"
+export TMPDIR="$BUILD_TMPDIR"
+export TEMP="$BUILD_TMPDIR"
+export TMP="$BUILD_TMPDIR"
+echo -e "${GREEN}✓ TMPDIR redirecionado para o SSD ($BUILD_TMPDIR)${NC}"
+
+# Create a temporary swap file on SSD for extra safety
+SWAPFILE="/mnt/swapfile.tmp"
+echo -e "  Criando swap temporário de 4G no SSD..."
+dd if=/dev/zero of="$SWAPFILE" bs=1M count=4096 status=progress 2>&1
+chmod 600 "$SWAPFILE"
+mkswap "$SWAPFILE" >/dev/null 2>&1
+swapon "$SWAPFILE"
+echo -e "${GREEN}✓ Swap temporário ativado (4 GiB no SSD)${NC}\n"
+
+# 8. Execute NixOS Install
+echo -e "${YELLOW}[6/6] Instalando NixOS (Flake: .#$TARGET_HOST)...${NC}"
 cd "$DEST_DIR"
 nixos-install --flake ".#$TARGET_HOST" --no-root-passwd
 echo -e "${GREEN}✓ Instalação do NixOS concluída com sucesso!${NC}\n"
 
-# 8. Set Ownership & Password inside target system
+# Cleanup: remove temporary swap and build dir
+swapoff "$SWAPFILE" 2>/dev/null || true
+rm -f "$SWAPFILE"
+rm -rf "$BUILD_TMPDIR"
+
+# 9. Set Ownership & Password inside target system
 echo -e "${YELLOW}Ajustando permissões e senha do usuário '$TARGET_USER':${NC}"
 nixos-enter --root /mnt -c "chown -R $TARGET_USER:users /home/$TARGET_USER/oceanus"
 nixos-enter --root /mnt -c "passwd $TARGET_USER"
