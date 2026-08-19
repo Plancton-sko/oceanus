@@ -98,4 +98,5 @@
           config.lib.file.mkOutOfStoreSymlink "/home/plancton/oceanus/modules/features/wm/quickshell";
       };
     };
+  };
 }

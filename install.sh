@@ -77,12 +77,19 @@ export TEMP="$BUILD_TMPDIR"
 export TMP="$BUILD_TMPDIR"
 echo -e "${GREEN}✓ TMPDIR redirecionado para o SSD ($BUILD_TMPDIR)${NC}"
 
-# Create a temporary swap file on SSD for extra safety
+# Create a temporary swap file on SSD for extra safety (Btrfs requires NOCOW)
 SWAPFILE="/mnt/swapfile.tmp"
 echo -e "  Criando swap temporário de 4G no SSD..."
-dd if=/dev/zero of="$SWAPFILE" bs=1M count=4096 status=progress 2>&1
-chmod 600 "$SWAPFILE"
-mkswap "$SWAPFILE" >/dev/null 2>&1
+rm -f "$SWAPFILE"
+if command -v btrfs >/dev/null 2>&1 && btrfs filesystem mkswapfile --help >/dev/null 2>&1; then
+  btrfs filesystem mkswapfile -s 4G "$SWAPFILE"
+else
+  truncate -s 0 "$SWAPFILE"
+  chattr +C "$SWAPFILE" 2>/dev/null || true
+  chmod 600 "$SWAPFILE"
+  dd if=/dev/zero of="$SWAPFILE" bs=1M count=4096 status=progress 2>&1
+  mkswap "$SWAPFILE" >/dev/null 2>&1
+fi
 swapon "$SWAPFILE"
 echo -e "${GREEN}✓ Swap temporário ativado (4 GiB no SSD)${NC}\n"
 

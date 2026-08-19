@@ -9,17 +9,6 @@
 
       disko.enableConfig = lib.mkDefault true;
 
-      # -- Swap file (1GB) via tmpfiles, no swapDevices needed --
-      systemd.tmpfiles.rules = [
-        "f /swap/swapfile 0600 root root - -"
-      ];
-      swapDevices = [
-        {
-          device = "/swap/swapfile";
-          size = 1024; # MB
-        }
-      ];
-
       disko.devices = {
         disk = {
           main = {
@@ -47,7 +36,11 @@
                       "/root" = { mountpoint = "/"; };
                       "/home" = { mountpoint = "/home"; };
                       "/nix"  = { mountpoint = "/nix"; };
-                      "/swap" = { mountpoint = "/swap"; mountOptions = [ "noatime" ]; };
+                      "/swap" = {
+                        mountpoint = "/swap";
+                        mountOptions = [ "noatime" ];
+                        swap.swapfile.size = "2G";
+                      };
                     };
                   };
                 };
