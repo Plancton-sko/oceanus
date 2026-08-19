@@ -5,4 +5,10 @@
       self.nixosModules.oceanusConfiguration
     ];
   };
+
+  flake.nixosConfigurations.oceanus-minimal = inputs.nixpkgs.lib.nixosSystem {
+    modules = [
+      self.nixosModules.oceanusMinimalConfiguration
+    ];
+  };
 }

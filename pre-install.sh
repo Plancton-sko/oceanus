@@ -1,0 +1,117 @@
+#!/usr/bin/env bash
+set -e
+
+# Colors for terminal output
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+BLUE='\033[0;34m'
+YELLOW='\033[1;33m'
+NC='\033[0m' # No Color
+
+echo -e "${BLUE}====================================================${NC}"
+echo -e "${BLUE}    Oceanus NixOS Pre-Installer (Etapa 1 / Live ISO) ${NC}"
+echo -e "${BLUE}====================================================${NC}\n"
+
+# 1. Root privilege check
+if [ "$EUID" -ne 0 ]; then
+  echo -e "${RED}Erro: Este script deve ser executado como root (sudo ./pre-install.sh)${NC}"
+  exit 1
+fi
+
+# 2. Paths and Constants
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+TARGET_USER="plancton"
+TARGET_HOST="oceanus"
+MINIMAL_HOST="${TARGET_HOST}-minimal"
+DISKO_CONFIG="$SCRIPT_DIR/modules/hosts/oceanus/disko.nix"
+
+# 3. Internet connectivity check
+echo -e "${YELLOW}[1/6] Verificando conexão com a internet...${NC}"
+if ! ping -c 1 -W 3 nixos.org >/dev/null 2>&1; then
+  echo -e "${RED}Erro: Sem conexão com a internet. Conecte-se via 'nmtui' e tente novamente.${NC}"
+  exit 1
+fi
+echo -e "${GREEN}✓ Conexão com a internet confirmada.${NC}\n"
+
+# 4. Read target disk from disko.nix
+TARGET_DISK=$(grep -E 'device = "/dev/' "$DISKO_CONFIG" | head -n1 | cut -d'"' -f2 || true)
+
+if [ -z "$TARGET_DISK" ]; then
+  TARGET_DISK="/dev/disk/by-id/ata-WDC_WDS240G2G0A-00JH30_202117800658"
+fi
+
+echo -e "${YELLOW}[2/6] Confirmação de Segurança:${NC}"
+echo -e "O pre-instalador irá formatar e particionar o disco: ${RED}$TARGET_DISK${NC}"
+echo -e "${RED}ATENÇÃO: TODOS OS DADOS NESTE DISCO SERÃO APAGADOS!${NC}\n"
+
+read -p "Deseja continuar com a instalação base? (digite 'sim' para confirmar): " CONFIRM
+if [ "$CONFIRM" != "sim" ]; then
+  echo -e "${YELLOW}Instalação cancelada pelo usuário.${NC}"
+  exit 0
+fi
+
+# 5. Execute Disko Partitioning and Mounts
+echo -e "\n${YELLOW}[3/6] Particionando o disco com Disko...${NC}"
+nix --experimental-features "nix-command flakes" run github:nix-community/disko -- \
+  --mode disko --flake "$SCRIPT_DIR#$TARGET_HOST"
+echo -e "${GREEN}✓ Particionamento Btrfs e montagens em /mnt concluídos.${NC}\n"
+
+# 6. Copy Dotfiles to /mnt
+echo -e "${YELLOW}[4/6] Copiando arquivos do repositório para o SSD alvo...${NC}"
+DEST_DIR="/mnt/home/$TARGET_USER/oceanus"
+mkdir -p "$DEST_DIR"
+cp -a "$SCRIPT_DIR/." "$DEST_DIR/"
+
+# Allow git operations inside chroot/target environment
+git config --global --add safe.directory "$DEST_DIR" || true
+
+echo -e "${GREEN}✓ Arquivos copiados para $DEST_DIR.${NC}\n"
+
+# 7. Prepare temporary swap & SSD build directory
+echo -e "${YELLOW}[5/6] Configurando diretórios temporários no SSD...${NC}"
+BUILD_TMPDIR="/mnt/tmp/nix-build"
+mkdir -p "$BUILD_TMPDIR"
+chmod 1777 "$BUILD_TMPDIR"
+export TMPDIR="$BUILD_TMPDIR"
+export TEMP="$BUILD_TMPDIR"
+export TMP="$BUILD_TMPDIR"
+
+# Redirect nix-daemon environment to SSD
+systemctl stop nix-daemon.service nix-daemon.socket 2>/dev/null || true
+systemctl set-environment TMPDIR="$BUILD_TMPDIR" TEMP="$BUILD_TMPDIR" TMP="$BUILD_TMPDIR" 2>/dev/null || true
+systemctl start nix-daemon.service 2>/dev/null || true
+
+SWAPFILE="/mnt/swapfile.tmp"
+rm -f "$SWAPFILE"
+if command -v btrfs >/dev/null 2>&1 && btrfs filesystem mkswapfile --help >/dev/null 2>&1; then
+  btrfs filesystem mkswapfile -s 8G "$SWAPFILE" || true
+fi
+if [ -f "$SWAPFILE" ]; then
+  swapon "$SWAPFILE" || true
+fi
+
+# 8. Execute NixOS Install (Minimal Target)
+echo -e "${YELLOW}[6/6] Instalando NixOS Base (Flake: .#$MINIMAL_HOST)...${NC}"
+cd "$DEST_DIR"
+nixos-install --flake ".#$MINIMAL_HOST" --no-root-passwd --option max-jobs 2 --option cores 2
+
+# Cleanup temporary swap
+swapoff "$SWAPFILE" 2>/dev/null || true
+rm -f "$SWAPFILE"
+rm -rf "$BUILD_TMPDIR"
+echo -e "${GREEN}✓ Instalação base do NixOS concluída com sucesso!${NC}\n"
+
+# 9. Set Ownership & Password inside target system
+echo -e "${YELLOW}Ajustando permissões e senha do usuário '$TARGET_USER':${NC}"
+nixos-enter --root /mnt -c "chown -R $TARGET_USER:users /home/$TARGET_USER/oceanus"
+nixos-enter --root /mnt -c "passwd $TARGET_USER"
+
+echo -e "\n${BLUE}====================================================${NC}"
+echo -e "${GREEN}  Etapa 1 Concluída! O sistema base está pronto. 🎉 ${NC}"
+echo -e "${BLUE}====================================================${NC}"
+echo -e "Próximos passos:"
+echo -e " 1. Reinicie o computador executando: ${YELLOW}sudo reboot${NC}"
+echo -e " 2. Remova o pendrive da ISO Live durante a reinicialização."
+echo -e " 3. Faça login no NixOS instalado como o usuário '${YELLOW}$TARGET_USER${NC}'."
+echo -e " 4. Complete a instalação do dotfile e Hyprland executando:"
+echo -e "    ${GREEN}cd ~/oceanus && ./install.sh${NC}\n"
