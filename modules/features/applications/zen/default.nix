@@ -33,16 +33,20 @@ in
                 chmod -R u+w $out
 
                 # Copy fx-autoconfig program files
-                LIB_DIR=$(echo $out/lib/zen-bin-*)
-                cp ${./fx-autoconfig/program/config.js} $LIB_DIR/mozilla.cfg
+                LIB_DIR=$(find $out/lib -maxdepth 1 -type d -name "zen*" | head -n 1)
+                if [ -n "$LIB_DIR" ] && [ -d "$LIB_DIR" ]; then
+                  cp ${./fx-autoconfig/program/config.js} "$LIB_DIR/mozilla.cfg"
+                fi
 
                 # Patch the wrapper script to run from our patched out path instead of the unpatched src path
-                sed -i "s|$src|$out|g" $out/bin/zen-twilight
+                sed -i "s|$src|$out|g" $out/bin/zen-twilight || true
 
                 # Recreate the symlink for .zen-twilight-wrapped so XPCOM loads libraries from lib/
-                ZEN_BIN_DIR=$(basename $out/lib/zen-bin-*)
-                rm -f $out/bin/.zen-twilight-wrapped
-                ln -s ../lib/$ZEN_BIN_DIR/zen $out/bin/.zen-twilight-wrapped
+                if [ -n "$LIB_DIR" ]; then
+                  ZEN_BIN_DIR=$(basename "$LIB_DIR")
+                  rm -f $out/bin/.zen-twilight-wrapped
+                  ln -s "../lib/$ZEN_BIN_DIR/zen" $out/bin/.zen-twilight-wrapped || true
+                fi
               '';
             })
             // {

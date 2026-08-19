@@ -18,7 +18,7 @@
         inherit (pkgs.hyprland) buildInputs;
         nativeBuildInputs = pkgs.hyprland.nativeBuildInputs ++ [
           pkgs.hyprland
-          pkgs.gcc14
+          pkgs.stdenv.cc
           pkgs.pkg-config
           pkgs.pixman
           pkgs.libdrm
@@ -53,7 +53,7 @@
         inherit (pkgs.hyprland) buildInputs;
         nativeBuildInputs = pkgs.hyprland.nativeBuildInputs ++ [
           pkgs.hyprland
-          pkgs.gcc14
+          pkgs.stdenv.cc
           pkgs.pkg-config
           pkgs.pixman
           pkgs.libdrm
@@ -89,7 +89,7 @@
         inherit (pkgs.hyprland) buildInputs;
         nativeBuildInputs = pkgs.hyprland.nativeBuildInputs ++ [
           pkgs.hyprland
-          pkgs.gcc14
+          pkgs.stdenv.cc
           pkgs.pkg-config
           pkgs.pixman
           pkgs.libdrm
