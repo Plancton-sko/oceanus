@@ -25,6 +25,13 @@
           pkgs.lua5_4
         ];
 
+        postPatch = ''
+          find src/ -type f \( -name "*.cpp" -o -name "*.hpp" \) 2>/dev/null -exec sed -i \
+            -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
+            -e 's|hyprland/src/config/shared/Types.hpp|hyprland/src/config/Types.hpp|g' \
+            {} + || true
+        '';
+
         enableParallelBuilding = true;
 
         buildPhase = ''
@@ -58,6 +65,13 @@
           pkgs.pixman
           pkgs.libdrm
         ];
+
+        postPatch = ''
+          find src/ -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
+            -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
+            -e 's|hyprland/src/config/shared/Types.hpp|hyprland/src/config/Types.hpp|g' \
+            {} +
+        '';
 
         enableParallelBuilding = true;
 
@@ -117,7 +131,7 @@
 
       hyprPlugins = [
         scrolloverview
-        hyprglass
+        # hyprglass  # Temporariamente desativado por incompatibilidade de headers na versão atual do Hyprland
         dynamic_cursors
       ];
     in
