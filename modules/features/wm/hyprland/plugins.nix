@@ -18,7 +18,7 @@
         inherit (pkgs.hyprland) buildInputs;
         nativeBuildInputs = pkgs.hyprland.nativeBuildInputs ++ [
           pkgs.hyprland
-          pkgs.stdenv.cc
+          pkgs.gcc14
           pkgs.pkg-config
           pkgs.pixman
           pkgs.libdrm
@@ -26,10 +26,12 @@
         ];
 
         postPatch = ''
-          find src/ -type f \( -name "*.cpp" -o -name "*.hpp" \) 2>/dev/null -exec sed -i \
+          find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
             -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
             -e 's|hyprland/src/config/shared/Types.hpp|hyprland/src/config/Types.hpp|g' \
-            {} + || true
+            -e 's|hyprland/src/desktop/view/|hyprland/src/desktop/|g' \
+            -e 's|hyprland/src/config/shared/|hyprland/src/config/|g' \
+            {} +
         '';
 
         enableParallelBuilding = true;
@@ -60,16 +62,18 @@
         inherit (pkgs.hyprland) buildInputs;
         nativeBuildInputs = pkgs.hyprland.nativeBuildInputs ++ [
           pkgs.hyprland
-          pkgs.stdenv.cc
+          pkgs.gcc14
           pkgs.pkg-config
           pkgs.pixman
           pkgs.libdrm
         ];
 
         postPatch = ''
-          find src/ -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
+          find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
             -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
             -e 's|hyprland/src/config/shared/Types.hpp|hyprland/src/config/Types.hpp|g' \
+            -e 's|hyprland/src/desktop/view/|hyprland/src/desktop/|g' \
+            -e 's|hyprland/src/config/shared/|hyprland/src/config/|g' \
             {} +
         '';
 
@@ -103,7 +107,7 @@
         inherit (pkgs.hyprland) buildInputs;
         nativeBuildInputs = pkgs.hyprland.nativeBuildInputs ++ [
           pkgs.hyprland
-          pkgs.stdenv.cc
+          pkgs.gcc14
           pkgs.pkg-config
           pkgs.pixman
           pkgs.libdrm
@@ -131,7 +135,7 @@
 
       hyprPlugins = [
         scrolloverview
-        # hyprglass  # Temporariamente desativado por incompatibilidade de headers na versão atual do Hyprland
+        hyprglass
         dynamic_cursors
       ];
     in
