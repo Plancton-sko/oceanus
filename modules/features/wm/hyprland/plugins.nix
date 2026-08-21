@@ -28,9 +28,8 @@
         postPatch = ''
           find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
             -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
-            -e 's|hyprland/src/config/shared/Types.hpp|hyprland/src/config/Types.hpp|g' \
             -e 's|hyprland/src/desktop/view/|hyprland/src/desktop/|g' \
-            -e 's|hyprland/src/config/shared/|hyprland/src/config/|g' \
+            -e 's|hyprland/src/config/Types.hpp|hyprland/src/config/shared/Types.hpp|g' \
             {} +
         '';
 
@@ -71,9 +70,8 @@
         postPatch = ''
           find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
             -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
-            -e 's|hyprland/src/config/shared/Types.hpp|hyprland/src/config/Types.hpp|g' \
             -e 's|hyprland/src/desktop/view/|hyprland/src/desktop/|g' \
-            -e 's|hyprland/src/config/shared/|hyprland/src/config/|g' \
+            -e 's|hyprland/src/config/Types.hpp|hyprland/src/config/shared/Types.hpp|g' \
             {} +
         '';
 
