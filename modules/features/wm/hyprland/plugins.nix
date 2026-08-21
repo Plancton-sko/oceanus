@@ -25,14 +25,6 @@
           pkgs.lua5_4
         ];
 
-        postPatch = ''
-          find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
-            -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
-            -e 's|hyprland/src/desktop/view/|hyprland/src/desktop/|g' \
-            -e 's|hyprland/src/config/Types.hpp|hyprland/src/config/shared/Types.hpp|g' \
-            {} +
-        '';
-
         enableParallelBuilding = true;
 
         buildPhase = ''
@@ -66,14 +58,6 @@
           pkgs.pixman
           pkgs.libdrm
         ];
-
-        postPatch = ''
-          find . -type f \( -name "*.cpp" -o -name "*.hpp" \) -exec sed -i \
-            -e 's|hyprland/src/desktop/view/Window.hpp|hyprland/src/desktop/Window.hpp|g' \
-            -e 's|hyprland/src/desktop/view/|hyprland/src/desktop/|g' \
-            -e 's|hyprland/src/config/Types.hpp|hyprland/src/config/shared/Types.hpp|g' \
-            {} +
-        '';
 
         enableParallelBuilding = true;
 
