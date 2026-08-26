@@ -1,8 +1,9 @@
 { self, inputs, ... }:
 
 let
+  vars = import ../../../../vars.nix;
   themeDir = ./.;
-  repo = "/home/plancton/dev/rice/nixos/doty";
+  repo = vars.riceDir;
   theming = "${repo}/modules/features/wm/theming";
 in
 {
@@ -19,7 +20,7 @@ in
         ./console-colors.nix-inc
       ];
 
-      home-manager.users.plancton =
+      home-manager.users.${vars.username} =
         { config, pkgs, ... }:
         let
           inherit (config.lib.file) mkOutOfStoreSymlink;

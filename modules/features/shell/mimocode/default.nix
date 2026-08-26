@@ -1,7 +1,8 @@
 { self, inputs, ... }:
 
 let
-  repo = "/home/plancton/dev/rice/nixos/doty";
+  vars = import ../../../../vars.nix;
+  repo = vars.riceDir;
   mimocodeDir = "${repo}/modules/features/shell/mimocode";
 in
 {
@@ -15,7 +16,7 @@ in
     }:
     {
 
-      home-manager.users.plancton =
+      home-manager.users.${vars.username} =
         { config, pkgs, ... }:
         let
           inherit (config.lib.file) mkOutOfStoreSymlink;

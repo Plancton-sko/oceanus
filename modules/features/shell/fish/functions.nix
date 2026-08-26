@@ -9,7 +9,7 @@
     }:
     {
 
-      home-manager.users.plancton.programs.fish = {
+      home-manager.users.${vars.username}.programs.fish = {
         functions = {
           hyprctl = {
             wraps = "hyprctl";
@@ -89,7 +89,7 @@
             '';
           };
           lcc = {
-            body = "/home/plancton/dev/rice/nixos/doty/modules/scripts/lcc $argv";
+            body = ("${vars.riceDir}/modules/scripts/lcc $argv";
           };
         };
         interactiveShellInit = ''

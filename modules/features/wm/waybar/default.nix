@@ -9,9 +9,9 @@
     }:
     {
 
-      home-manager.users.plancton = { config, ... }: {
+      home-manager.users.${vars.username} = { config, ... }: {
         xdg.configFile."waybar".source =
-          config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/wm/waybar";
+          config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/wm/waybar";
       };
     };
 }

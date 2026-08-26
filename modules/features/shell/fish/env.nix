@@ -9,7 +9,7 @@
     }:
     {
 
-      home-manager.users.plancton.programs.fish = {
+      home-manager.users.${vars.username}.programs.fish = {
         shellInit = ''
           # -- Locale & SSL Certificates --
           set -gx LANG en_US.UTF-8

@@ -9,16 +9,16 @@
     }:
     {
 
-      home-manager.users.plancton = { config, ... }: {
+      home-manager.users.${vars.username} = { config, ... }: {
         programs.btop = {
           enable = true;
         };
 
         xdg.configFile = {
           "btop/btop.conf".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/shell/btop/btop.conf";
+            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/btop/btop.conf";
           "btop/themes".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/shell/btop/themes";
+            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/btop/themes";
         };
       };
     };

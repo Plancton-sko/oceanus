@@ -7,9 +7,6 @@
       lib,
       ...
     }:
-    let
-      vars = import ../../../../vars.nix;
-    in
     {
       home-manager.users.${vars.username}.programs.fish = {
         shellAliases = {

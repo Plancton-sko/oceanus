@@ -9,7 +9,7 @@
     }:
     {
 
-      home-manager.users.plancton.programs.zoxide = {
+      home-manager.users.${vars.username}.programs.zoxide = {
         enable = true;
         enableFishIntegration = true;
         options = [

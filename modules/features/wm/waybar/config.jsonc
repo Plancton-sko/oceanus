@@ -18,14 +18,14 @@
   ],
   "custom/tailscale": {
     "rotate": 270,
-    "exec": "/home/parazeeknova/.config/waybar/scripts/get_tailscale_status",
+    "exec": "~/.config/waybar/scripts/get_tailscale_status",
     "return-type": "json",
     "interval": 5,
     "on-click": "quickshell --config network_popup",
     "tooltip": true
   },
   "custom/voxtype": {
-    "exec": "/home/parazeeknova/.config/waybar/scripts/get_voxtype_status",
+    "exec": "~/.config/waybar/scripts/get_voxtype_status",
     "return-type": "json",
     "format": "{}",
     "tooltip": true
@@ -33,7 +33,7 @@
   "custom/tray_toggle": {
     "format": "{}",
     "return-type": "json",
-    "exec": "/home/parazeeknova/.config/waybar/scripts/tray_count",
+    "exec": "~/.config/waybar/scripts/tray_count",
     "signal": 5,
     "on-click": "quickshell -c tray_popup ipc call tray_popup close || quickshell --config tray_popup",
     "tooltip": false,
@@ -97,8 +97,8 @@
       "default": ["", "󰕾"],
     },
     "scroll-step": 1,
-    "on-scroll-up": "/home/parazeeknova/.config/quickshell/osd/bin/osdctl volume up",
-    "on-scroll-down": "/home/parazeeknova/.config/quickshell/osd/bin/osdctl volume down",
+    "on-scroll-up": "~/.config/quickshell/osd/bin/osdctl volume up",
+    "on-scroll-down": "~/.config/quickshell/osd/bin/osdctl volume down",
     "on-click": "quickshell --config volume_popup",
     "ignored-sinks": ["Easy Effects Sink"],
     "tooltip": false,

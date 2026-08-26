@@ -9,16 +9,16 @@
     }:
     {
 
-      home-manager.users.plancton = { config, ... }: {
+      home-manager.users.${vars.username} = { config, ... }: {
         programs.cava = {
           enable = true;
         };
 
         xdg.configFile = {
           "cava/config".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/shell/cava/config";
+            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/cava/config";
           "cava/config.template".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/shell/cava/config.template";
+            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/cava/config.template";
         };
       };
     };

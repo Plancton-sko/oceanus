@@ -16,7 +16,7 @@
 
       programs.fish.enable = true;
 
-      home-manager.users.plancton.programs.fish = {
+      home-manager.users.${vars.username}.programs.fish = {
         enable = true;
         plugins = with pkgs.fishPlugins; [
           {

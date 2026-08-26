@@ -6,9 +6,6 @@
       lib,
       ...
     }:
-    let
-      vars = import ../../../vars.nix;
-    in
     {
       imports =
         (lib.attrValues (

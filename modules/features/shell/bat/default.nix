@@ -9,16 +9,16 @@
     }:
     {
 
-      home-manager.users.plancton = { config, ... }: {
+      home-manager.users.${vars.username} = { config, ... }: {
         programs.bat = {
           enable = true;
         };
 
         xdg.configFile = {
           "bat/config".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/shell/bat/config";
+            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/bat/config";
           "bat/themes".source =
-            config.lib.file.mkOutOfStoreSymlink "/home/plancton/dev/rice/nixos/doty/modules/features/shell/bat/themes";
+            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/bat/themes";
         };
       };
     };

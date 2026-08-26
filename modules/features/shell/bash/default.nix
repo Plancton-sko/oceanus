@@ -9,7 +9,7 @@
     }:
     {
 
-      home-manager.users.plancton.programs.bash = {
+      home-manager.users.${vars.username}.programs.bash = {
         enable = true;
         shellAliases = {
           # -- NixOS --

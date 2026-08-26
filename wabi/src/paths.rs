@@ -22,7 +22,16 @@ pub fn cache_dir() -> PathBuf {
 }
 
 pub fn dotfiles_dir() -> PathBuf {
-    env::var_os("WABI_DOTFILES_DIR")
-        .map(PathBuf::from)
-        .unwrap_or_else(|| home_dir().join("doty"))
+    if let Some(val) = env::var_os("WABI_DOTFILES_DIR") {
+        return PathBuf::from(val);
+    }
+    let dev_path = home_dir().join("dev/rice/nixos/doty");
+    if dev_path.exists() {
+        return dev_path;
+    }
+    let doty_path = home_dir().join("doty");
+    if doty_path.exists() {
+        return doty_path;
+    }
+    dev_path
 }
