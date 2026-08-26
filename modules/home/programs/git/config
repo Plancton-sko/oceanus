@@ -1,0 +1,98 @@
+[user]
+	name = Harsh Sahu
+	email = yesh8harsh+github@gmail.com
+	signingkey = /home/parazeeknova/.ssh/github_signing_key.pub
+
+[core]
+  compression = 9
+  whitespace = error
+  preloadindex = true
+
+[advice]
+  addEmptyPathSpec = false
+  pushNonFastForward = false
+  statusHints = false
+
+[url "git@github.com:parazeeknova/"]
+  insteadOf = "para:"
+[url "git@github.com:singularityworks-xyz/"]
+  insteadOf = "sw:"
+
+[url "git@github.com:zephverse/"]
+  insteadOf = "zv:"
+
+[init]
+  defaultBranch = dev
+
+[status]
+  branch = true
+  showStash = true
+  showUntrackedFiles = all
+
+[diff]
+  context = 3
+  renames = copies
+  interHunkContext = 10
+
+[pager]
+  diff = diff-so-fancy | $PAGER
+  branch = false
+  tag = false
+
+[diff-so-fancy]
+  markEmptyLines = false
+
+[interactive]
+  diffFilter = diff-so-fancy --patch
+  singleKey = true
+
+[push]
+  autoSetupRemote = true
+  default = current
+  followTags = true
+
+[pull]
+  default = current
+  rebase = true
+
+[rebase]
+  autoStash = true
+  missingCommitsCheck = warn
+
+[log]
+  abbrevCommit = true
+  graphColors = blue,yellow,cyan,magenta,green,red
+
+[branch]
+  sort = -committerdate
+
+[tag]
+  sort = -taggerdate
+	gpgsign = true
+	forceSignAnnotated = true
+
+[commit]
+	gpgsign = true
+
+[gpg "ssh"]
+	program = ssh-keygen
+	allowedSignersFile = ~/.ssh/allowed_signers
+[gpg]
+	format = ssh
+	program = gpg
+[diff "jupyternotebook"]
+	command = git-nbdiffdriver diff
+[merge "jupyternotebook"]
+	driver = git-nbmergedriver merge %O %A %B %L %P
+	name = jupyter notebook merge driver
+[difftool "nbdime"]
+	cmd = git-nbdifftool diff \"$LOCAL\" \"$REMOTE\" \"$BASE\"
+[difftool]
+	prompt = false
+[mergetool "nbdime"]
+	cmd = git-nbmergetool merge \"$BASE\" \"$LOCAL\" \"$REMOTE\" \"$MERGED\"
+[mergetool]
+	prompt = false
+
+[include]
+	path = colors

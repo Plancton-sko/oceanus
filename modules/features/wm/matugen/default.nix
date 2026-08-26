@@ -1,0 +1,30 @@
+{ self, inputs, ... }:
+
+let
+  repo = "/home/plancton/dev/rice/nixos/doty";
+  matugenDir = "${repo}/modules/features/wm/matugen";
+in
+{
+
+  flake.nixosModules.riceMatugen =
+    {
+      config,
+      pkgs,
+      lib,
+      ...
+    }:
+    {
+
+      home-manager.users.plancton =
+        { config, pkgs, ... }:
+        let
+          inherit (config.lib.file) mkOutOfStoreSymlink;
+        in
+        {
+          xdg.configFile = {
+            "matugen/config.toml".source = mkOutOfStoreSymlink "${matugenDir}/config.toml";
+            "matugen/templates".source = mkOutOfStoreSymlink "${matugenDir}/templates";
+          };
+        };
+    };
+}

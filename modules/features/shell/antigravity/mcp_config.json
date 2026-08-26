@@ -1,0 +1,68 @@
+{
+  "mcpServers": {
+    "context7": {
+      "serverUrl": "https://mcp.context7.com/mcp",
+      "headers": {
+        "CONTEXT7_API_KEY": "{env:CONTEXT7_API_KEY}"
+      }
+    },
+    "github": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-github"
+      ],
+      "env": {
+        "GITHUB_PERSONAL_ACCESS_TOKEN": "{env:GITHUB_PERSONAL_ACCESS_TOKEN}"
+      }
+    },
+    "filesystem": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/home/plancton/dev/rice/nixos/doty",
+        "/home/plancton/Repository",
+        "/home/plancton/Projects",
+        "/home/plancton"
+      ]
+    },
+    "playwright": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "@playwright/mcp"
+      ]
+    },
+    "chrome-devtools": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "chrome-devtools-mcp@latest",
+        "--autoConnect"
+      ]
+    },
+    "firecrawl": {
+      "command": "bunx",
+      "args": [
+        "firecrawl-mcp"
+      ],
+      "env": {
+        "FIRECRAWL_API_URL": "http://127.0.0.1:48002"
+      }
+    },
+    "hindsight": {
+      "serverUrl": "http://127.0.0.1:48888/mcp/default"
+    },
+    "camofox": {
+      "command": "npx",
+      "args": [
+        "-y",
+        "camofox-mcp@latest"
+      ],
+      "env": {
+        "CAMOFOX_URL": "http://127.0.0.1:49377"
+      }
+    }
+  }
+}
