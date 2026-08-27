@@ -31,6 +31,9 @@ in
             "fastfetch/config.jsonc.template".source =
               mkOutOfStoreSymlink "${fastfetchDir}/config.jsonc.template";
             "fastfetch/cat.txt".source = mkOutOfStoreSymlink "${fastfetchDir}/cat.txt";
+            "fastfetch/ocean.txt".source = mkOutOfStoreSymlink "${fastfetchDir}/ocean.txt";
+            "fastfetch/forest.txt".source = mkOutOfStoreSymlink "${fastfetchDir}/forest.txt";
+            "fastfetch/dynamic.txt".source = mkOutOfStoreSymlink "${fastfetchDir}/dynamic.txt";
           };
         };
     };

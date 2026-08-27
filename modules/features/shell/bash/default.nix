@@ -13,8 +13,8 @@
         enable = true;
         shellAliases = {
           # -- NixOS --
-          doty = "cd ~/doty && make rebuild";
-          dotes = "cd ~/doty && sudo nixos-rebuild test --flake .#apostrophe";
+          oceanus = "cd ${vars.riceDir} && make rebuild";
+          rebuild = "cd ${vars.riceDir} && sudo nixos-rebuild test --flake .#oceanus";
           nfu = "nix flake update";
           nfc = "nix flake check";
           nfsh = "nix flake show";

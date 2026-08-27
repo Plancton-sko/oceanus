@@ -3,7 +3,7 @@
     { pkgs, ... }:
     {
       devShells.default = pkgs.mkShell {
-        name = "doty-dev";
+        name = "oceanus-dev";
 
         nativeBuildInputs = with pkgs; [
           rustc

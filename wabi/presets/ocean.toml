@@ -1,0 +1,14 @@
+# Oceanus — Deep Ocean Palette
+# Primary signature preset: deep ocean water, muted teal, desaturated cyan, bioluminescent accents.
+
+[colors]
+surface = "#0b131e"
+surface_container = "#131f2d"
+surface_variant = "#1b3b48"
+on_surface = "#dce8ed"
+on_surface_variant = "#9bb8c4"
+primary = "#46c2ca"
+primary_container = "#2a7f88"
+secondary = "#5ca3b4"
+tertiary = "#e0a96d"
+error = "#e06c75"

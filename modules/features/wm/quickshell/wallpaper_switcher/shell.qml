@@ -9,7 +9,7 @@ Scope {
     id: root
 
     property string homeDir: Quickshell.env("HOME")
-    property string animeDir: homeDir + "/doty/modules/backgrounds"
+    property string animeDir: homeDir + "/dev/rice/nixos/doty/modules/backgrounds"
     property var wallpapers: []
     property var filteredWallpapers: []
     property var searchIndex: []
@@ -151,8 +151,8 @@ Scope {
     function confirmWallpaper(path) {
         applyTimer.stop();
         root.activeWallpaper = path;
-        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/set_wallpaper", path]);
-        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/theme_switcher", "wallpaper", path]);
+        Quickshell.execDetached([root.homeDir + "/scripts/set_wallpaper", path]);
+        Quickshell.execDetached([root.homeDir + "/scripts/theme_switcher", "wallpaper", path]);
         Quickshell.execDetached(["mkdir", "-p", root.homeDir + "/.cache"]);
         Quickshell.execDetached(["sh", "-c", "printf %s \"$1\" > " + root.homeDir + "/.cache/last_wallpaper", "sh", path]);
         Qt.quit();
@@ -249,7 +249,7 @@ Scope {
         running: false
         onTriggered: {
             if (root.activeWallpaper !== "")
-                Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/set_wallpaper", root.activeWallpaper]);
+                Quickshell.execDetached([root.homeDir + "/scripts/set_wallpaper", root.activeWallpaper]);
         }
     }
 
@@ -297,8 +297,8 @@ Scope {
                     isClosing = true;
 
                     if (root.activeWallpaper !== "") {
-                        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/set_wallpaper", root.activeWallpaper]);
-                        Quickshell.execDetached([root.homeDir + "/doty/modules/scripts/theme_switcher", "wallpaper", root.activeWallpaper]);
+                        Quickshell.execDetached([root.homeDir + "/scripts/set_wallpaper", root.activeWallpaper]);
+                        Quickshell.execDetached([root.homeDir + "/scripts/theme_switcher", "wallpaper", root.activeWallpaper]);
                         Quickshell.execDetached(["mkdir", "-p", root.homeDir + "/.cache"]);
                         Quickshell.execDetached(["sh", "-c", "printf %s \"$1\" > " + root.homeDir + "/.cache/last_wallpaper", "sh", root.activeWallpaper]);
                     }

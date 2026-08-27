@@ -138,6 +138,18 @@ hl.bind(
 	)
 )
 hl.bind(
+	mainMod .. " + I",
+	hl.dsp.exec_cmd(
+		"quickshell -c sysmon_popup ipc call sysmon_popup close || quickshell --config sysmon_popup"
+	)
+)
+hl.bind(
+	mainMod .. " + A",
+	hl.dsp.exec_cmd(
+		"quickshell -c ai_popup ipc call ai_popup close || quickshell --config ai_popup"
+	)
+)
+hl.bind(
 	mainMod .. " + K",
 	hl.dsp.exec_cmd("quickshell -c shortcut_popup ipc call shortcut_popup close || quickshell --config shortcut_popup")
 )
@@ -155,6 +167,7 @@ local save_register_ss = "mkdir -p " .. ss_dir .. " && FILE=" .. ss_path .. " &&
 local save_register_ss_region_swappy = "mkdir -p " .. ss_dir .. " && FILE=" .. ss_path .. ' && grim -g "$(' .. slurp_cmd .. ')" "$FILE" && swappy -f "$FILE" -o "$FILE" && notify-send -t 2000 -i "$FILE" -a "Screenshot" "Screenshot Saved" "Copied to clipboard"'
 
 hl.bind("Print", hl.dsp.exec_cmd("sh -c '" .. save_register_ss .. "'"), { locked = true })
+hl.bind(mainMod .. " + S", hl.dsp.exec_cmd("sh -c '" .. save_register_ss_region_swappy .. "'"))
 hl.bind(mainMod .. " + SHIFT + S", hl.dsp.exec_cmd("sh -c '" .. save_register_ss_region_swappy .. "'"))
 
 ---------------------

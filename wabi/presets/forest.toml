@@ -1,0 +1,14 @@
+# Oceanus — Forest & Moss Palette
+# Secondary signature preset: deep forest shadows, moss greens, muted olive, warm amber.
+
+[colors]
+surface = "#121b14"
+surface_container = "#1b2a1f"
+surface_variant = "#2c3f30"
+on_surface = "#e2e8df"
+on_surface_variant = "#a0b29c"
+primary = "#68a376"
+primary_container = "#467252"
+secondary = "#7d9b68"
+tertiary = "#d4a359"
+error = "#d9534f"

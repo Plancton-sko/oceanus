@@ -175,9 +175,17 @@ fn default_palette() -> HashMap<String, String> {
 }
 
 fn load_preset_palette(name: &str) -> Option<HashMap<String, String>> {
-    let path = home_dir()
-        .join("doty/wabi/presets")
-        .join(format!("{}.toml", name));
+    let presets_dir = env::var_os("WABI_PRESETS_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| {
+            let dev_preset = home_dir().join("dev/rice/nixos/doty/wabi/presets");
+            if dev_preset.exists() {
+                dev_preset
+            } else {
+                home_dir().join("doty/wabi/presets")
+            }
+        });
+    let path = presets_dir.join(format!("{}.toml", name));
 
     let content = fs::read_to_string(&path).ok()?;
     let value: toml::Value = toml::from_str(&content).ok()?;
@@ -640,7 +648,16 @@ fn main() {
     };
 
     let vars = build_vars(&palette);
-    let doty = home_dir().join("doty");
+    let doty = env::var_os("WABI_DOTFILES_DIR")
+        .map(PathBuf::from)
+        .unwrap_or_else(|| {
+            let dev = home_dir().join("dev/rice/nixos/doty");
+            if dev.exists() {
+                dev
+            } else {
+                home_dir().join("doty")
+            }
+        });
 
     // Write colors.json and Colors.qml early so QuickShell picks up new colors
     // immediately, before slow operations (papirus-folders, make sync, bat cache).
