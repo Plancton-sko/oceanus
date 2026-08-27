@@ -2,7 +2,8 @@
 ---- AUTOSTART ----
 -------------------
 
-local dotfiles = os.getenv("WABI_DOTFILES_DIR") or "/home/plancton/dev/rice/nixos/doty"
+local home = os.getenv("HOME") or "/home/plancton"
+local dotfiles = os.getenv("WABI_DOTFILES_DIR") or os.getenv("RICE_DIR") or (home .. "/dev/rice/nixos/oceanus")
 
 hl.on("hyprland.start", function()
 	-- System Startups

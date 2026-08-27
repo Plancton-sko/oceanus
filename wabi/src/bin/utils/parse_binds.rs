@@ -1000,10 +1000,22 @@ pub fn parse_binds<P: AsRef<Path>>(filepath: P) -> io::Result<Vec<Category>> {
 }
 
 fn main() {
-    let dotfiles = std::env::var("WABI_DOTFILES_DIR").unwrap_or_else(|_| {
-        let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".to_string());
-        format!("{home}/doty")
-    });
+    let dotfiles = std::env::var("WABI_DOTFILES_DIR")
+        .or_else(|_| std::env::var("RICE_DIR"))
+        .unwrap_or_else(|_| {
+            let home = std::env::var("HOME").unwrap_or_else(|_| "/tmp".to_string());
+            let oceanus_dev = format!("{home}/dev/rice/nixos/oceanus");
+            if std::path::Path::new(&oceanus_dev).exists() {
+                oceanus_dev
+            } else {
+                let doty_dev = format!("{home}/dev/rice/nixos/doty");
+                if std::path::Path::new(&doty_dev).exists() {
+                    doty_dev
+                } else {
+                    format!("{home}/doty")
+                }
+            }
+        });
     let binds_file = format!("{dotfiles}/modules/features/wm/hyprland/hypr/modules/binds.lua");
     let args: Vec<String> = std::env::args().collect();
     let filepath = if args.len() > 1 {
