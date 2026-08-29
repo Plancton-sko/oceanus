@@ -1,14 +1,15 @@
 #!/usr/bin/env bash
 # ==============================================================================
-# oceanus — Post-Install Configurator
+# oceanus — Post-Install Configurator (rebuild.sh)
 #
-# Transforms a fresh, minimal NixOS installation into the oceanus workstation.
-# This script does NOT partition or format disks.
+# Applies the oceanus NixOS configuration to an already-installed NixOS system.
+# This script does NOT partition, format, or install the OS itself.
+# For fresh installs: use installer/install-ssd.sh
 #
 # Usage:
-#   ./install.sh              Interactive (default)
+#   ./install.sh              Interactive
 #   ./install.sh --yes        Skip confirmation prompts
-#   ./install.sh --dry-run    Validate without applying
+#   ./install.sh --dry-run    Validate + show what would change, apply nothing
 # ==============================================================================
 set -Eeuo pipefail
 
@@ -24,17 +25,21 @@ for arg in "$@"; do
         --dry-run) OPT_DRY=true ;;
         --help|-h)
             echo "Usage: ./install.sh [--yes] [--dry-run]"
+            echo ""
+            echo "  --yes       Skip confirmation prompts"
+            echo "  --dry-run   Validate and show planned changes without applying anything"
             exit 0
             ;;
         *)
             echo "Unknown argument: $arg" >&2
+            echo "Run './install.sh --help' for usage." >&2
             exit 1
             ;;
     esac
 done
 
 # ------------------------------------------------------------------------------
-# Colors
+# Colors & logging
 # ------------------------------------------------------------------------------
 BOLD="\033[1m"
 DIM="\033[2m"
@@ -45,14 +50,12 @@ YELLOW="\033[33m"
 RED="\033[31m"
 RESET="\033[0m"
 
-# ------------------------------------------------------------------------------
-# Logging
-# ------------------------------------------------------------------------------
 info()    { echo -e "${BLUE}▸${RESET} $*"; }
 ok()      { echo -e "${GREEN}✓${RESET} $*"; }
 warn()    { echo -e "${YELLOW}⚠${RESET} $*"; }
 die()     { echo -e "\n${RED}✗ $*${RESET}" >&2; exit 1; }
 section() { echo -e "\n${BOLD}${CYAN}━━━ $* ━━━${RESET}\n"; }
+dryinfo() { echo -e "${DIM}  [dry-run] $*${RESET}"; }
 
 trap 'echo -e "\n${RED}✗ Falha na linha ${LINENO}: ${BASH_COMMAND}${RESET}" >&2' ERR
 
@@ -78,130 +81,157 @@ cat <<'EOF'
  \___/ \___\___||_|_|\___/|___/
 EOF
 echo -e "${RESET}"
-echo -e "${BOLD}oceanus${RESET} — Post-Install Configurator"
+
+if [[ "$OPT_DRY" == true ]]; then
+    echo -e "${BOLD}oceanus${RESET} — Post-Install Configurator ${YELLOW}[DRY RUN — nenhuma alteração será feita]${RESET}"
+else
+    echo -e "${BOLD}oceanus${RESET} — Post-Install Configurator"
+fi
 echo -e "${DIM}${SCRIPT_DIR}${RESET}\n"
 
-# ------------------------------------------------------------------------------
-# Preflight checks
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# PHASE 1: PREFLIGHT — Read-only checks, no side effects
+# ==============================================================================
 section "Preflight checks"
 
 # Must not run as root
-[[ $EUID -ne 0 ]] || die "Não execute este script como root. Use seu usuário normal; sudo será solicitado quando necessário."
+[[ $EUID -ne 0 ]] || die "Não execute este script como root. Use seu usuário normal."
 
 # Must be NixOS
-[[ -f /etc/NIXOS ]] || die "Sistema não é NixOS. Este script é para instalar oceanus em um NixOS existente."
+[[ -f /etc/NIXOS ]] || die "Sistema não é NixOS. Este script é para configurar um NixOS já instalado."
 
 # Required commands
 for cmd in nix git sudo nixos-rebuild; do
-    command -v "$cmd" >/dev/null 2>&1 && ok "$cmd disponível" || die "Comando não encontrado: $cmd"
+    command -v "$cmd" >/dev/null 2>&1 \
+        && ok "$cmd disponível" \
+        || die "Comando necessário não encontrado: $cmd"
 done
 
-# sudo access
-sudo -v >/dev/null 2>&1 && ok "Privilégios sudo confirmados" || die "Usuário não possui sudo. Adicione o usuário ao grupo wheel e tente novamente."
+# sudo access check — antes de qualquer trabalho
+sudo -v >/dev/null 2>&1 \
+    && ok "Privilégios sudo confirmados" \
+    || die "Sem acesso sudo. Adicione seu usuário ao grupo wheel."
 
 # Repository structure
-[[ -f "${SCRIPT_DIR}/flake.nix" ]] || die "flake.nix não encontrado em ${SCRIPT_DIR}. Execute a partir da raiz do repositório oceanus."
-[[ -f "${SCRIPT_DIR}/vars.nix" ]] || die "vars.nix não encontrado. O repositório pode estar incompleto."
+[[ -f "${SCRIPT_DIR}/flake.nix" ]] \
+    || die "flake.nix não encontrado em ${SCRIPT_DIR}. Execute a partir da raiz do repositório oceanus."
+[[ -f "${SCRIPT_DIR}/vars.nix" ]] \
+    || die "vars.nix não encontrado. O repositório pode estar incompleto."
 ok "Estrutura do repositório válida"
 
-# Flakes enabled
-nix flake --help >/dev/null 2>&1 || die "Flakes não estão habilitados neste ambiente. Adicione nix.settings.experimental-features = [\"nix-command\" \"flakes\"] na configuração."
-ok "Flakes disponíveis"
-
-# Network check
-if curl -s --max-time 5 https://cache.nixos.org >/dev/null 2>&1; then
-    ok "Conexão com cache.nixos.org confirmada"
+# Connectivity (optional — curl may not be available)
+if command -v curl >/dev/null 2>&1; then
+    if curl -s --max-time 5 https://cache.nixos.org >/dev/null 2>&1; then
+        ok "Acesso ao cache.nixos.org confirmado"
+    else
+        warn "Sem acesso ao cache.nixos.org. O build pode ser mais lento ou falhar."
+    fi
 else
-    warn "Sem acesso ao cache.nixos.org. O build pode ser muito mais lento ou falhar."
+    warn "curl não disponível; conectividade não verificada."
 fi
 
-# Git untracked warning
+# Git status report (informational, not a blocker)
 if [[ -d "${SCRIPT_DIR}/.git" ]]; then
-    UNTRACKED="$(git -C "$SCRIPT_DIR" ls-files --others --exclude-standard)"
-    if [[ -n "$UNTRACKED" ]]; then
-        warn "Arquivos não rastreados pelo Git encontrados (não serão visíveis para a flake):"
-        echo "$UNTRACKED" | sed 's/^/    /'
+    GIT_STATUS="$(git -C "$SCRIPT_DIR" status --short)"
+    if [[ -n "$GIT_STATUS" ]]; then
+        warn "Working tree não está limpo:"
+        echo "$GIT_STATUS" | sed 's/^/    /'
+        echo ""
+        info "Arquivos modificados e rastreados serão incluídos no build."
+        info "Arquivos não rastreados (? ?) NÃO serão visíveis para a flake."
         echo ""
     else
-        ok "Working tree Git sem arquivos não rastreados relevantes"
+        ok "Working tree Git limpo"
     fi
 fi
 
-# Validate host exists in flake
-info "Verificando configuração do host '${HOST}' na flake..."
-nix eval "${FLAKE}#nixosConfigurations.${HOST}.config.networking.hostName" \
-    >/dev/null 2>&1 \
-    || die "Host '${HOST}' não encontrado em nixosConfigurations. Verifique a flake.nix."
-ok "Host '${HOST}' validado na flake"
+# ==============================================================================
+# PHASE 2: DISCOVER — Analyse what would change (read-only)
+# ==============================================================================
+section "Análise do hardware"
 
-# ------------------------------------------------------------------------------
-# Hardware configuration
-# ------------------------------------------------------------------------------
-section "Hardware configuration"
+HW_WILL_CHANGE=false
+HW_WILL_CREATE=false
 
 if [[ -f "$HW_SRC" ]]; then
     if [[ -f "$HW_DST" ]]; then
         if diff -q "$HW_SRC" "$HW_DST" >/dev/null 2>&1; then
-            ok "hardware.nix já está atualizado, sem alterações necessárias"
+            ok "hardware.nix está atualizado — sem alterações necessárias"
         else
-            warn "hardware-configuration.nix difere do hardware.nix atual."
+            HW_WILL_CHANGE=true
+            warn "hardware-configuration.nix difere do hardware.nix atual:"
             echo ""
             diff --color=auto "$HW_DST" "$HW_SRC" || true
             echo ""
-
-            if [[ "$OPT_YES" == true ]]; then
-                REPLY="y"
-            else
-                read -rp "Atualizar hardware.nix com a detecção atual? [Y/n]: " REPLY
-                REPLY="${REPLY:-y}"
-            fi
-
-            if [[ "$REPLY" =~ ^[Yy]$ ]]; then
-                # Backup before overwriting
-                cp "$HW_DST" "${HW_DST}.bak"
-                info "Backup salvo em hardware.nix.bak"
-                install -Dm644 "$HW_SRC" "$HW_DST"
-                ok "hardware.nix atualizado"
-            else
-                info "Mantendo hardware.nix existente"
-            fi
         fi
     else
-        install -Dm644 "$HW_SRC" "$HW_DST"
-        ok "hardware.nix criado a partir da detecção do sistema"
+        HW_WILL_CREATE=true
+        warn "hardware.nix não existe — seria criado a partir de ${HW_SRC}"
     fi
 else
-    warn "/etc/nixos/hardware-configuration.nix não encontrado."
-    [[ -f "$HW_DST" ]] && info "Usando hardware.nix existente no repositório." || die "Nenhum hardware.nix disponível. Gere um com: sudo nixos-generate-config"
+    if [[ -f "$HW_DST" ]]; then
+        ok "Usando hardware.nix existente no repositório (hardware-configuration.nix não encontrado em /etc/nixos)"
+    else
+        die "Nenhum hardware.nix disponível. Gere com: sudo nixos-generate-config"
+    fi
 fi
 
-# ------------------------------------------------------------------------------
-# Validation
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# PHASE 3: VALIDATE FLAKE — Read-only
+# ==============================================================================
 section "Validação da flake"
+
+info "Verificando host '${HOST}' na flake..."
+nix eval "${FLAKE}#nixosConfigurations.${HOST}.config.networking.hostName" \
+    >/dev/null 2>&1 \
+    || die "Host '${HOST}' não encontrado em nixosConfigurations. Verifique flake.nix."
+ok "Host '${HOST}' existe na flake"
 
 info "Executando nix flake check..."
 nix flake check "$FLAKE"
 ok "Flake válida"
 
-info "Executando dry-build da configuração..."
+info "Executando dry-build..."
 sudo nixos-rebuild dry-build --flake "${FLAKE}#${HOST}"
 ok "dry-build concluído sem erros"
 
-# ------------------------------------------------------------------------------
-# Apply
-# ------------------------------------------------------------------------------
-section "Aplicação"
-
+# ==============================================================================
+# DRY-RUN EXIT — Optionally show dry-activate then stop
+# ==============================================================================
 if [[ "$OPT_DRY" == true ]]; then
-    ok "Modo --dry-run: nenhuma alteração aplicada ao sistema."
+    section "Modo dry-run: simulação de ativação"
+    dryinfo "Executando dry-activate para mostrar mudanças de serviços..."
+    sudo nixos-rebuild dry-activate --flake "${FLAKE}#${HOST}" || true
+    echo ""
+
+    if [[ "$HW_WILL_CREATE" == true ]]; then
+        dryinfo "hardware.nix seria criado a partir de ${HW_SRC}"
+    elif [[ "$HW_WILL_CHANGE" == true ]]; then
+        dryinfo "hardware.nix seria atualizado (diff mostrado acima)"
+    fi
+
+    echo ""
+    ok "Modo --dry-run concluído. Nenhuma alteração foi feita."
     exit 0
 fi
 
-echo -e "  Host:     ${CYAN}${HOST}${RESET}"
-echo -e "  Flake:    ${DIM}${FLAKE}${RESET}"
+# ==============================================================================
+# PHASE 4: CONFIRM — Show planned changes, ask once
+# ==============================================================================
+section "Mudanças planejadas"
+
+echo -e "  ${BOLD}Host:${RESET}  ${CYAN}${HOST}${RESET}"
+echo -e "  ${BOLD}Flake:${RESET} ${DIM}${FLAKE}${RESET}"
 echo ""
+
+if [[ "$HW_WILL_CREATE" == true || "$HW_WILL_CHANGE" == true ]]; then
+    echo -e "  ${YELLOW}Arquivo que será modificado no repositório:${RESET}"
+    echo -e "    ${HW_DST}"
+    if [[ -f "$HW_DST" ]]; then
+        echo -e "    ${DIM}(backup automático via git — use 'git diff' para comparar)${RESET}"
+    fi
+    echo ""
+fi
 
 if [[ "$OPT_YES" == true ]]; then
     REPLY="y"
@@ -210,12 +240,9 @@ else
     REPLY="${REPLY:-y}"
 fi
 
-case "$REPLY" in
-    y|Y|yes|YES)
-        info "Aplicando com nixos-rebuild switch..."
-        sudo nixos-rebuild switch --flake "${FLAKE}#${HOST}"
-        ;;
-    n|N|no|NO)
+case "${REPLY,,}" in
+    y|yes) ;;
+    n|no)
         info "Cancelado."
         exit 0
         ;;
@@ -224,13 +251,35 @@ case "$REPLY" in
         ;;
 esac
 
-# ------------------------------------------------------------------------------
+# ==============================================================================
+# PHASE 5: APPLY — Only reaches here if not --dry-run and confirmed
+# ==============================================================================
+section "Aplicando"
+
+# Apply hardware update (only if needed)
+if [[ "$HW_WILL_CREATE" == true ]]; then
+    info "Criando hardware.nix..."
+    install -Dm644 "$HW_SRC" "$HW_DST"
+    ok "hardware.nix criado"
+elif [[ "$HW_WILL_CHANGE" == true ]]; then
+    info "Atualizando hardware.nix..."
+    install -Dm644 "$HW_SRC" "$HW_DST"
+    ok "hardware.nix atualizado (use 'git diff' para revisar ou 'git restore' para reverter)"
+fi
+
+# Refresh sudo before the actual build (may have expired during long validation)
+sudo -v
+
+info "Executando nixos-rebuild switch..."
+sudo nixos-rebuild switch --flake "${FLAKE}#${HOST}"
+
+# ==============================================================================
 # Done
-# ------------------------------------------------------------------------------
+# ==============================================================================
 echo ""
 echo -e "${GREEN}${BOLD}======================================================"
-echo -e " Configuração aplicada com sucesso!"
+echo -e " Configuração oceanus aplicada com sucesso!"
 echo -e ""
-echo -e " Reinicie se necessário para ativar mudanças"
-echo -e " que exigem um novo boot (kernel, módulos)."
+echo -e " Reinicie apenas se necessário para ativar mudanças"
+echo -e " que exigem novo boot (kernel, módulos de hardware)."
 echo -e "======================================================${RESET}"
