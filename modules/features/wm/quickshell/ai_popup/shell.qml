@@ -14,6 +14,7 @@ Scope {
 
     property string clipboardContent: ""
     property var aiActions: [
+        
         {
             title: "Claude Code",
             cmd: "uwsm app -- ghostty -e claude",
