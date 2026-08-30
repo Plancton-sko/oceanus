@@ -1,4 +1,7 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+let
+  vars = import ./../../../../vars.nix;
+in {
 
   flake.nixosModules.riceCava =
     {
@@ -16,9 +19,9 @@
 
         xdg.configFile = {
           "cava/config".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/cava/config";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/cava/config";
           "cava/config.template".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/cava/config.template";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/cava/config.template";
         };
       };
     };

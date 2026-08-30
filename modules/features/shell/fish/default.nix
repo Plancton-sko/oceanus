@@ -1,4 +1,7 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+let
+  vars = import ./../../../../vars.nix;
+in {
 
   flake.nixosModules.riceFish =
     {

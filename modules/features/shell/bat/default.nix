@@ -1,4 +1,7 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+let
+  vars = import ./../../../../vars.nix;
+in {
 
   flake.nixosModules.riceBat =
     {
@@ -16,9 +19,9 @@
 
         xdg.configFile = {
           "bat/config".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/bat/config";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/bat/config";
           "bat/themes".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/bat/themes";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/bat/themes";
         };
       };
     };

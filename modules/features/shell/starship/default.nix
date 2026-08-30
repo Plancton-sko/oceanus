@@ -1,4 +1,7 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+let
+  vars = import ./../../../../vars.nix;
+in {
 
   flake.nixosModules.riceStarship =
     {
@@ -17,9 +20,9 @@
 
         xdg.configFile = {
           "starship.toml".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/starship/starship.toml";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/starship/starship.toml";
           "starship.toml.template".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/starship/starship.toml.template";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/starship/starship.toml.template";
         };
       };
     };

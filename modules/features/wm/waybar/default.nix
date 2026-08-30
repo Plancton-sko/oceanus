@@ -1,4 +1,7 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+let
+  vars = import ./../../../../vars.nix;
+in {
 
   flake.nixosModules.riceWaybar =
     {
@@ -11,7 +14,7 @@
 
       home-manager.users.${vars.username} = { config, ... }: {
         xdg.configFile."waybar".source =
-          config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/wm/waybar";
+          config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/wm/waybar";
       };
     };
 }

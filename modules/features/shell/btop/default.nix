@@ -1,4 +1,7 @@
-{ self, inputs, ... }: {
+{ self, inputs, ... }:
+let
+  vars = import ./../../../../vars.nix;
+in {
 
   flake.nixosModules.riceBtop =
     {
@@ -16,9 +19,9 @@
 
         xdg.configFile = {
           "btop/btop.conf".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/btop/btop.conf";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/btop/btop.conf";
           "btop/themes".source =
-            config.lib.file.mkOutOfStoreSymlink ("${vars.riceDir}/modules/features/shell/btop/themes";
+            config.lib.file.mkOutOfStoreSymlink "${vars.riceDir}/modules/features/shell/btop/themes";
         };
       };
     };
