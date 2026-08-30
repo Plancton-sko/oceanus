@@ -92,7 +92,7 @@ in {
             '';
           };
           lcc = {
-            body = ("${vars.riceDir}/modules/scripts/lcc $argv";
+            body = "${vars.riceDir}/modules/scripts/lcc $argv";
           };
         };
         interactiveShellInit = ''
