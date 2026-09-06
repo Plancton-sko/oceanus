@@ -33,7 +33,7 @@ fn get_latest_verso_version() -> Option<String> {
         args.push(&auth_header);
     }
 
-    args.push("https://api.github.com/repos/parazeeknova/amemorymachine/releases/latest");
+    args.push("https://api.github.com/repos/Plancton-sko/amemorymachine/releases/latest");
 
     let output = Command::new("curl").args(&args).output().ok()?;
 
@@ -97,7 +97,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         latest_version
     );
     let new_url = format!(
-        "https://github.com/parazeeknova/amemorymachine/releases/download/v{}/Verso-{}-x86_64.AppImage",
+        "https://github.com/Plancton-sko/amemorymachine/releases/download/v{}/Verso-{}-x86_64.AppImage",
         latest_version, latest_version
     );
 

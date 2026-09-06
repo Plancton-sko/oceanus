@@ -1,8 +1,8 @@
-{ config, lib, modulesPath, ... }:
+{ config, lib, inputs, ... }:
 
 {
   imports = [
-    (modulesPath + "/installer/scan/not-detected.nix")
+    "${inputs.nixpkgs}/nixos/modules/installer/scan/not-detected.nix"
   ];
 
   # Boot / hardware modules
@@ -45,9 +45,10 @@
 
   swapDevices = [ ];
 
-  # Platform / CPU
+  # Platform
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
 
+  # AMD CPU
   hardware.cpu.amd.updateMicrocode =
     lib.mkDefault config.hardware.enableRedistributableFirmware;
 }
