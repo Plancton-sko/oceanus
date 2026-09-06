@@ -10,17 +10,21 @@ in {
       ...
     }:
     {
-      imports =
-        (lib.attrValues (
-          lib.filterAttrs (name: _: lib.hasPrefix "rice" name) self.nixosModules
-        ))
-        ++ [
-          self.nixosModules.oceanusHardware
-          self.nixosModules.oceanusPackages
-          self.nixosModules.oceanusGaming
-          self.nixosModules.oceanusVirtualization
-          self.nixosModules.riceContainers
-        ];
+      imports = [
+        self.nixosModules.riceHome
+        self.nixosModules.riceGit
+        self.nixosModules.riceHyprland
+        self.nixosModules.riceHyprlandPlugins
+        self.nixosModules.riceTheming
+        self.nixosModules.riceFish
+        self.nixosModules.riceScripts
+
+        self.nixosModules.oceanusHardware
+        self.nixosModules.oceanusPackages
+        self.nixosModules.riceGaming
+        self.nixosModules.oceanusVirtualization
+        self.nixosModules.riceContainers
+      ];
 
       # Bootloader: systemd-boot
       boot.loader.systemd-boot.enable = true;

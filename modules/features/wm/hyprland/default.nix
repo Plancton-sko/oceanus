@@ -1,6 +1,6 @@
 { self, inputs, ... }:
 let
-  vars = import ./../../../../vars.nix;
+  vars = import ../../../../vars.nix;
 in {
 
   flake.nixosModules.riceHyprland =
