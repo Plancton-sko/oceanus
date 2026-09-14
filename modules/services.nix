@@ -22,10 +22,7 @@
     # Habilitar aqui somente se precisar de MPD como serviço de sistema.
   };
 
-  # -----------------------------------------------------------------
-  # Variáveis de sessão Wayland para ativação de serviços systemd
-  # -----------------------------------------------------------------
-  systemd.user.extraConfig = ''
-    DefaultEnvironment="WAYLAND_DISPLAY=wayland-1"
-  '';
+  # Nota: Variáveis de ambiente Wayland (WAYLAND_DISPLAY, XDG_CURRENT_DESKTOP)
+  # são exportadas dinamicamente pelo Mango autostart via dbus-update-activation-environment.
 }
+

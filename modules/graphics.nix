@@ -32,8 +32,10 @@
       libva
       vulkan-loader
       vulkan-validation-layers
+      vulkan-tools       # vulkaninfo, vkcube — diagnóstico
     ];
   };
+
 
   # -----------------------------------------------------------------
   # Wayland / Ozone

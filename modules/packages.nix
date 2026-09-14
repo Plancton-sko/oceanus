@@ -76,7 +76,6 @@
     # -----------------------------------------------------------------
     # Diagnóstico e utilitários de desenvolvimento
     # -----------------------------------------------------------------
-    vulkan-tools       # vulkaninfo — validar GPU
     dbus               # necessário para alguns serviços
 
   ];
@@ -89,6 +88,6 @@
 
   programs.firefox.enable = true;  # pode coexistir com brave
 
-  nixpkgs.config.allowUnfree = true;
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 }
+

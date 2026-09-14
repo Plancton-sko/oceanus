@@ -4,6 +4,11 @@
   inputs = {
     nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
 
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     noctalia-shell = {
       url = "github:Noctalia-dev/noctalia-shell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -28,17 +33,16 @@
     };
   };
 
-  outputs = { self, nixpkgs, ... }@inputs: {
+  outputs = { self, nixpkgs, home-manager, ... }@inputs: {
     nixosConfigurations.desktop = nixpkgs.lib.nixosSystem {
       system = "x86_64-linux";
       specialArgs = { inherit inputs; };
 
       modules = [
-        { nixpkgs.config.allowUnfree = true; }
-
         inputs.mango.nixosModules.mango
+        home-manager.nixosModules.home-manager
 
-        ./hosts/desktop/default.nix
+        ./hosts/oceanus/default.nix
 
         {
           # Pacotes vindos de inputs externos — não disponíveis via nixpkgs
@@ -50,5 +54,8 @@
         }
       ];
     };
+
+    # Alias para o hostname "oceanus"
+    nixosConfigurations.oceanus = self.nixosConfigurations.desktop;
   };
 }

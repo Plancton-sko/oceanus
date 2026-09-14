@@ -5,43 +5,25 @@
 
 ```
 OCEANUS RESEARCH NETWORK
-──────────────────────────────────────
-HABITAT SYSTEM 03
-BIOLOGICAL / OCEANOGRAPHIC
-
-NixOS  ·  Flakes  ·  Mango  ·  Noctalia
+─────────────────────────────────────────────────────────────
+HOST: oceanus | COMPOSITOR: Mango | SHELL: Noctalia
+PALETA: Oceanus Base / Oceano / Floresta / Pinturas Clássicas / Matugen
+─────────────────────────────────────────────────────────────
 ```
 
 ---
 
-
-## Stack
-
-| Componente | Tecnologia |
-|---|---|
-| OS | NixOS (unstable) |
-| Compositor | [Mango](https://github.com/DreamMaoMao/mango) |
-| Shell / Bar | [Noctalia](https://github.com/Noctalia-dev/noctalia-shell) |
-| Extras | [QuickShell](https://github.com/outfoxxed/quickshell) |
-| Login | SDDM Qt6 + [SilentSDDM](https://github.com/uiriansan/SilentSDDM) |
-| Terminal | [Ghostty](https://ghostty.org) |
-| Shell | Fish + Starship |
-| Música | MPD + RMPC + CAVA |
-
----
-
-## Estrutura
+## Estrutura do Repositório
 
 ```
 nixos-config/
-├── flake.nix
-│
+├── flake.nix                  # Flake com NixOS + Home Manager
 ├── hosts/
-│   └── desktop/
-│       ├── default.nix            ← entry point da máquina
-│       └── hardware-configuration.nix   ← gerado pelo nixos-generate-config
-│
-├── modules/
+│   └── oceanus/
+│       ├── default.nix        # Módulo do host oceanus
+│       ├── home.nix           # Home Manager (dotfiles declarativos)
+│       └── hardware-configuration.nix
+├── modules/                   # Módulos NixOS de sistema
 │   ├── boot.nix
 │   ├── networking.nix
 │   ├── audio.nix
@@ -50,136 +32,73 @@ nixos-config/
 │   ├── portals.nix
 │   ├── services.nix
 │   └── packages.nix
-│
-├── desktop/
-│   ├── mango/
-│   │   ├── config.conf
-│   │   ├── float.conf
-│   │   └── scripts/
-│   ├── noctalia/
-│   │   ├── bar-oceanus.toml
-│   │   └── palettes/oceanus.toml
-│   └── sddm/
-│       └── sddm.nix
-│
-├── apps/
-│   ├── mpd/mpd.conf
-│   ├── ghostty/config
-│   └── starship/starship.toml
-│
-└── assets/
-    ├── wallpapers/
-    └── sddm/
+├── desktop/                   # Configurações do ambiente desktop
+│   ├── mango/                 # Compositor Mango + scripts
+│   ├── noctalia/              # Shell / Bar / Paletas
+│   ├── sddm/                  # Display Manager
+│   └── themes/                # Presets de temas (Oceanus, Oceano, Floresta, Pinturas)
+├── apps/                      # Aplicações do usuário
+│   ├── ghostty/               # Terminal Ghostty
+│   ├── starship/              # Prompt Starship
+│   ├── mpd/                   # Music Player Daemon
+│   ├── rmpc/                  # Cliente MPD
+│   └── matugen/               # Gerador dinâmico de cores por wallpaper
+└── assets/                    # Papéis de parede e ilustrações
 ```
 
 ---
 
-## Instalação
+## Como Instalar (100% Declarativo)
 
-### 1. Preparar hardware
+1. **Clonar este repositório**:
+   ```bash
+   cd ~/dev/rice/rice_teste/my-nixos-config
+   ```
 
-```bash
-# Identificar monitores
-wlr-randr
+2. **Gerar o hardware-configuration.nix da sua máquina**:
+   ```bash
+   sudo nixos-generate-config --show-hardware-config > hosts/oceanus/hardware-configuration.nix
+   ```
 
-# Anotar os nomes — ex: DP-1, HDMI-A-1
-# Editar desktop/mango/config.conf → seção "Monitor rules"
-```
+3. **Executar a reconstrução declarativa do NixOS + Home Manager**:
+   ```bash
+   sudo nixos-rebuild switch --flake .#oceanus
+   ```
 
-### 2. Gerar hardware config
-
-```bash
-sudo nixos-generate-config --show-hardware-config > hosts/desktop/hardware-configuration.nix
-```
-
-### 3. Ajustar host
-
-Editar [`hosts/desktop/default.nix`](hosts/desktop/default.nix):
-
-```nix
-networking.hostName = "oceanus";          # seu hostname
-users.users.usuario = { ... };            # seu username
-time.timeZone = "America/Sao_Paulo";
-i18n.defaultLocale = "pt_BR.UTF-8";
-```
-
-### 4. Ajustar GPU
-
-Editar [`modules/graphics.nix`](modules/graphics.nix) e descomentar o bloco da sua GPU.
-
-### 5. Build
-
-```bash
-nixos-rebuild build --flake .#desktop
-```
-
-### 6. Instalar
-
-```bash
-sudo nixos-rebuild switch --flake .#desktop
-```
+> **Zero passos manuais!** O Home Manager vincula automaticamente todos os dotfiles (`mango`, `noctalia`, `ghostty`, `starship`, `mpd`, `matugen`, `themes`) para `~/.config/`.
 
 ---
 
-## Dotfiles
+## Temas & Gerenciamento Visual
 
-Após o rebuild, copiar os dotfiles para o lugar correto:
+- **Alternar Temas**:
+  Execute o script de seleção de temas (ou abra via Wofi):
+  ```bash
+  bash ~/.config/desktop/mango/scripts/theme-select.sh
+  ```
+  *Opções:* `OCEANUS Base`, `Oceano`, `Floresta`, `Pinturas Clássicas` ou `Matugen (Dinâmico)`.
 
-```bash
-# Mango
-mkdir -p ~/.config/mango/scripts
-cp desktop/mango/config.conf ~/.config/mango/
-cp desktop/mango/float.conf  ~/.config/mango/
-cp desktop/mango/scripts/*.sh ~/.config/mango/scripts/
-chmod +x ~/.config/mango/scripts/*.sh
-
-# Ghostty
-mkdir -p ~/.config/ghostty
-cp apps/ghostty/config ~/.config/ghostty/config
-
-# Starship
-mkdir -p ~/.config
-cp apps/starship/starship.toml ~/.config/starship.toml
-
-# MPD
-mkdir -p ~/.config/mpd ~/Music/Playlists
-cp apps/mpd/mpd.conf ~/.config/mpd/mpd.conf
-```
+- **Trocar Wallpaper + Matugen Dinâmico**:
+  ```bash
+  bash ~/.config/desktop/mango/scripts/set-wallpaper.sh /caminho/para/imagem.jpg dynamic
+  ```
 
 ---
 
-## Paleta OCEANUS
+## Principais Atalhos do Teclado
 
-| Nome | Hex | Uso |
-|---|---|---|
-| Abyss | `#07141A` | Fundo principal |
-| Deep Blue | `#0B2029` | Superfícies |
-| Petrol | `#10343A` | Variante de superfície |
-| Ocean | `#164B55` | Hover / focus |
-| Moss | `#394B36` | Verde escuro |
-| Fern | `#526B4B` | Verde médio / sucesso |
-| Seaweed | `#2E5547` | Teal |
-| Parchment | `#D8D1B8` | Texto principal |
-| Bone | `#E3DDC9` | Texto sobre superfície |
-| Mist | `#AAB7AF` | Texto secundário |
-| Seafoam | `#8EBFAF` | Acento primário |
-| Copper | `#B9784A` | Acento secundário |
-| Amber | `#C79B52` | Aviso / destaque |
-| Oxide | `#8D5C4C` | Erro |
-
----
-
-## Fases
-
-- **Fase 1** ✓ Sistema mínimo — Mango + Noctalia + dois monitores
-- **Fase 2** Window management — ajustes de tags, layouts, floating
-- **Fase 3** Noctalia — bar, launcher, control center com estética OCEANUS
-- **Fase 4** Identidade — fontes, GTK/Qt, ícones, cursor, wallpapers, SDDM, Plymouth
-- **Fase 5** Extras — MPD visualização, CAVA, QuickShell widgets
-
----
-
-## Base técnica
-
-Fundação: [`mikuri12/my-nixos-config`](https://github.com/mikuri12/my-nixos-config)  
-Identidade: OCEANUS — própria.
+| Atalho | Ação |
+|---|---|
+| `Super + Space` | Launcher (Noctalia) |
+| `Super + S` | Control Center (Noctalia) |
+| `Super + Return` | Terminal (Ghostty) |
+| `Super + E` | File Manager TUI (Yazi) |
+| `Super + Shift + W` | Navegador (Brave) |
+| `Super + O` | Overview de janelas |
+| `Super + Shift + O` | Overlay do Mango |
+| `Alt + H / J / K / L` | Foco de janela (Vi-style) |
+| `Super + Shift + H / J / K / L` | Mover janela |
+| `Alt + Shift + ← / →` | Mover foco entre monitores (`DP-3` / `HDMI-A-1`) |
+| `Super + Alt + ← / →` | Mover janela para outro monitor |
+| `Super + 1..9` | Trocar workspace/tag |
+| `Super + Shift + 1..9` | Mover janela para workspace/tag |

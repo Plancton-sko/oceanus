@@ -1,7 +1,7 @@
 { config, pkgs, inputs, ... }:
 
 # =============================================================================
-# OCEANUS — Host: desktop
+# OCEANUS — Host: oceanus
 # Ponto de entrada para esta máquina específica.
 # Importa todos os módulos e define configurações host-specific.
 # =============================================================================
@@ -23,6 +23,13 @@
     # Desktop
     ../../desktop/sddm/sddm.nix
   ];
+
+  # ---------------------------------------------------------------------------
+  # Home Manager — Gerenciamento declarativo do usuário plancton
+  # ---------------------------------------------------------------------------
+  home-manager.useGlobalPkgs = true;
+  home-manager.useUserPackages = true;
+  home-manager.users.plancton = import ./home.nix;
 
   # ---------------------------------------------------------------------------
   # Mango compositor
@@ -77,9 +84,6 @@
       "video"        # acesso a dispositivos de vídeo
       "gamemode"     # Gamemode
       "podman"       # containers (opcional — remover se não usar)
-    ];
-    packages = with pkgs; [
-      # Pacotes pessoais do usuário (adicionar conforme necessário)
     ];
   };
 

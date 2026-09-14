@@ -23,8 +23,8 @@
   # -----------------------------------------------------------------
   environment.systemPackages = with pkgs; [
     gamescope          # compositor Wayland para jogos (fullscreen nativo, FSR)
-    vulkan-tools       # vulkaninfo, vkcube — diagnóstico
     # heroic           # launcher Epic/GOG — descomentar se usar
+
     # lutris           # launcher multi-plataforma — descomentar se usar
     # wineWowPackages.stagingFull  # Wine com patches — descomentar se usar jogos Windows
     # winetricks       # helper Wine — descomentar com Wine
