@@ -30,6 +30,8 @@ fi
 # Se o modo for dinâmico e matugen estiver instalado, gera as cores
 if [ "$MODE" = "dynamic" ] && command -v matugen >/dev/null 2>&1; then
     echo "Gerando cores dinâmicas via Matugen..."
+    # Desvincula symlinks do Nix Store caso existam para permitir escrita pelo Matugen
+    rm -f ~/.config/ghostty/config ~/.config/starship/starship.toml ~/.config/noctalia/palettes/dynamic.toml ~/.config/gtk-3.0/colors.css 2>/dev/null || true
     matugen image "$WALLPAPER" --config ~/.config/matugen/config.toml
 fi
 

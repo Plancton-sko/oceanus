@@ -7,6 +7,16 @@
 THEMES_DIR="$HOME/.config/desktop/themes"
 NOCTALIA_PALETTES="$HOME/.config/noctalia/palettes"
 
+mkdir -p "$NOCTALIA_PALETTES"
+
+apply_preset() {
+    local preset_file="$1"
+    local target="$NOCTALIA_PALETTES/oceanus.toml"
+    rm -f "$target"
+    cp "$preset_file" "$target"
+    echo "Tema aplicado com sucesso em $target"
+}
+
 options="1. OCEANUS Base (Original Preservado)\n2. Oceano (Abissal)\n3. Floresta (Botânico/Musgo)\n4. Pinturas Clássicas (Ilustrações)\n5. Matugen (Dinâmico via Wallpaper)"
 
 chosen=$(echo -e "$options" | wofi --dmenu --prompt "Selecione o Tema OCEANUS:" --width 450 --height 280)
@@ -14,19 +24,19 @@ chosen=$(echo -e "$options" | wofi --dmenu --prompt "Selecione o Tema OCEANUS:" 
 case "$chosen" in
     *"OCEANUS Base"*)
         echo "Aplicando tema: OCEANUS Base"
-        cp ~/.config/desktop/themes/oceanus-base/palette.toml ~/.config/noctalia/palettes/oceanus.toml 2>/dev/null || true
+        apply_preset "$THEMES_DIR/oceanus-base/palette.toml"
         ;;
     *"Oceano"*)
         echo "Aplicando tema: Oceano"
-        cp ~/.config/desktop/themes/oceano/palette.toml ~/.config/noctalia/palettes/oceanus.toml 2>/dev/null || true
+        apply_preset "$THEMES_DIR/oceano/palette.toml"
         ;;
     *"Floresta"*)
         echo "Aplicando tema: Floresta"
-        cp ~/.config/desktop/themes/floresta/palette.toml ~/.config/noctalia/palettes/oceanus.toml 2>/dev/null || true
+        apply_preset "$THEMES_DIR/floresta/palette.toml"
         ;;
     *"Pinturas Clássicas"*)
         echo "Aplicando tema: Pinturas Clássicas"
-        cp ~/.config/desktop/themes/pinturas-classicas/palette.toml ~/.config/noctalia/palettes/oceanus.toml 2>/dev/null || true
+        apply_preset "$THEMES_DIR/pinturas-classicas/palette.toml"
         ;;
     *"Matugen"*)
         echo "Selecione um wallpaper para gerar o tema dinâmico:"

@@ -15,10 +15,12 @@
 
   # ---------------------------------------------------------------------------
   # Declaratividade total dos dotfiles via xdg.configFile
+  # Mapeamento individual para permitir escrita dinâmica nos diretórios
   # ---------------------------------------------------------------------------
   xdg.configFile = {
     "mango".source = "../../desktop/mango";
-    "noctalia".source = "../../desktop/noctalia";
+    "noctalia/bar-oceanus.toml".source = "../../desktop/noctalia/bar-oceanus.toml";
+    "noctalia/palettes/oceanus.toml".source = "../../desktop/noctalia/palettes/oceanus.toml";
     "ghostty/config".source = "../../apps/ghostty/config";
     "starship/starship.toml".source = "../../apps/starship/starship.toml";
     "mpd/mpd.conf".source = "../../apps/mpd/mpd.conf";
