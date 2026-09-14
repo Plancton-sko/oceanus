@@ -6,16 +6,8 @@
 # =============================================================================
 
 let
-  # SilentSDDM oferece vários temas. Verificar disponíveis em:
-  # https://github.com/uiriansan/SilentSDDM
-  #
-  # Temas disponíveis (verificar no flake atual):
-  #   rei, sugar-candy, corners, ...
-  #
-  # Fase 1: usar o tema mais neutro disponível.
-  # Fase 4: criar tema OCEANUS customizado.
   sddm-theme = inputs.silentSDDM.packages.${pkgs.system}.default.override {
-    theme = "sugar-candy";   # substituir quando tema OCEANUS estiver pronto
+    theme = "rei";
   };
 in {
   environment.systemPackages = [
@@ -24,6 +16,8 @@ in {
   ];
 
   qt.enable = true;
+
+  services.displayManager.defaultSession = "mango";
 
   services.displayManager.sddm = {
     package   = pkgs.kdePackages.sddm;   # Qt6
