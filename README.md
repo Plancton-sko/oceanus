@@ -52,7 +52,8 @@ nixos-config/
 
 1. **Clonar este repositório**:
    ```bash
-   cd ~/dev/rice/rice_teste/my-nixos-config
+   cd ~/dev/rice/oceanus
+   # ou onde o repositório foi clonado
    ```
 
 2. **Gerar o hardware-configuration.nix da sua máquina**:
@@ -65,7 +66,14 @@ nixos-config/
    sudo nixos-rebuild switch --flake .#oceanus
    ```
 
-> **Zero passos manuais!** O Home Manager vincula automaticamente todos os dotfiles (`mango`, `noctalia`, `ghostty`, `starship`, `mpd`, `matugen`, `themes`) para `~/.config/`.
+4. **Descobrir e configurar os monitores (primeiro login no Mango)**:
+   ```bash
+   wlr-randr
+   # Anote os nomes dos outputs (ex: DP-3, HDMI-A-1)
+   # Edite desktop/mango/config.conf e descomente as linhas monitorrule
+   ```
+
+> **Zero passos manuais!** O Home Manager (via `wayland.windowManager.mango`) vincula automaticamente o `config.conf`, registra o ambiente no systemd/D-Bus e inicia `mango-session.target`.
 
 ---
 
@@ -98,7 +106,7 @@ nixos-config/
 | `Super + Shift + O` | Overlay do Mango |
 | `Alt + H / J / K / L` | Foco de janela (Vi-style) |
 | `Super + Shift + H / J / K / L` | Mover janela |
-| `Alt + Shift + ← / →` | Mover foco entre monitores (`DP-3` / `HDMI-A-1`) |
+| `Alt + Shift + ← / →` | Mover foco entre monitores |
 | `Super + Alt + ← / →` | Mover janela para outro monitor |
 | `Super + 1..9` | Trocar workspace/tag |
 | `Super + Shift + 1..9` | Mover janela para workspace/tag |

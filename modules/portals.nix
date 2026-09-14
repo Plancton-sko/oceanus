@@ -6,9 +6,9 @@
   # Necessário para: file picker, screenshots, screen sharing,
   # aplicações Electron/Flatpak/browser.
   #
-  # wlr   — screenshot, screen capture (Wayland/wlroots-based)
-  # gtk   — file picker, open/save dialogs
-  # gnome — alternativa com mais features (mantido para compatibilidade)
+  # Nota: a configuração de portais específicos do Mango
+  # (ScreenCast/Screenshot via wlr) é gerenciada pelo nixosModules.mango.
+  # Aqui definimos apenas o portal padrão (gtk) para outros usos.
   # -----------------------------------------------------------------
   xdg.portal = {
     enable = true;
@@ -20,10 +20,13 @@
 
     config = {
       common = {
-        default              = [ "gtk" ];
-        "org.freedesktop.impl.portal.Screenshot"   = [ "wlr" ];
-        "org.freedesktop.impl.portal.ScreenCast"   = [ "wlr" ];
-        "org.freedesktop.impl.portal.RecordSession" = [ "wlr" ];
+        default = [ "gtk" ];
+      };
+      mango = {
+        default                                      = [ "gtk" ];
+        "org.freedesktop.impl.portal.Screenshot"     = [ "wlr" ];
+        "org.freedesktop.impl.portal.ScreenCast"     = [ "wlr" ];
+        "org.freedesktop.impl.portal.RecordSession"  = [ "wlr" ];
       };
     };
   };

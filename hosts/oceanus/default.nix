@@ -26,9 +26,11 @@
 
   # ---------------------------------------------------------------------------
   # Home Manager — Gerenciamento declarativo do usuário plancton
+  # hmModules.mango expõe wayland.windowManager.mango com integração systemd
   # ---------------------------------------------------------------------------
   home-manager.useGlobalPkgs = true;
   home-manager.useUserPackages = true;
+  home-manager.sharedModules = [ inputs.mango.hmModules.mango ];
   home-manager.users.plancton = import ./home.nix;
 
   # ---------------------------------------------------------------------------
