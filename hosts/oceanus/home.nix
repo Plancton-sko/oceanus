@@ -49,6 +49,8 @@
   # Nota: mango NÃO está mais aqui — gerenciado por wayland.windowManager.mango
   # ---------------------------------------------------------------------------
   xdg.configFile = {
+    "mango/scripts".source                   = ../../desktop/mango/scripts;
+    "mango/float.conf".source                = ../../desktop/mango/float.conf;
     "noctalia/bar-oceanus.toml".source        = ../../desktop/noctalia/bar-oceanus.toml;
     "noctalia/palettes/oceanus.toml".source   = ../../desktop/noctalia/palettes/oceanus.toml;
     "ghostty/config".source                   = ../../apps/ghostty/config;

@@ -28,7 +28,7 @@
     elyprismlauncher.url = "github:ElyPrismLauncher/ElyPrismLauncher/10.0.2";
 
     mango = {
-      url = "github:DreamMaoMao/mango";
+      url = "github:mangowm/mango";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };

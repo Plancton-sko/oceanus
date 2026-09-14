@@ -16,35 +16,41 @@
     # -----------------------------------------------------------------
     # Shell / Terminal
     # -----------------------------------------------------------------
+    # -----------------------------------------------------------------
+    # Shell / Terminal / Launcher / Dialogs
+    # -----------------------------------------------------------------
     starship          # prompt configurável
-    fish              # declarado também em programs.fish (necessário nos dois lugares)
-    # ghostty         # instalado via programs.ghostty se disponível, ou aqui
+    fish              # declarado também em programs.fish
+    ghostty           # terminal padrão configurado no Mango (SUPER + Return)
+    wofi              # dmenu launcher (usado pelo theme-select.sh)
+    zenity            # dialogs de arquivo GUI (usado pelo theme-select.sh)
 
     # -----------------------------------------------------------------
     # CLI / TUI
     # -----------------------------------------------------------------
     yazi              # file manager TUI
-    fastfetch         # system info (substitui nitch/neofetch)
+    fastfetch         # system info
     vim               # editor fallback
-    # neovim          # descomente se usar Neovim como editor principal
+    wlr-randr         # utilitário de diagnóstico e configuração de monitores Wayland
 
     # -----------------------------------------------------------------
-    # Wayland / Clipboard
+    # Wayland / Wallpaper / Clipboard / Screenshot
     # -----------------------------------------------------------------
     wl-clipboard      # wl-copy, wl-paste
-    cliphist          # histórico de clipboard (usado pelo Noctalia)
-    wayland-utils     # wayland-info e similares
-    grim              # screenshot (usado pelos scripts do Mango)
-    slurp             # seleção de região para screenshot
-    swappy            # editor de screenshot rápido
-    matugen           # gerador dinâmico de cores baseadas no wallpaper
-
+    cliphist          # histórico de clipboard
+    wayland-utils     # wayland-info
+    grim              # screenshot
+    slurp             # seleção de região
+    swappy            # editor de screenshot
+    matugen           # gerador dinâmico de cores
+    swww              # daemon de wallpaper Wayland com transições
+    swaybg            # wallpaper fallback
 
     # -----------------------------------------------------------------
     # Desktop — aplicações principais
     # -----------------------------------------------------------------
-    #brave             # browser principal
-    firefox         # alternativa — programs.firefox.enable = true no host
+    brave             # browser secundário/principal (SUPER+SHIFT+W)
+    firefox           # browser principal (programs.firefox.enable = true)
 
     nautilus          # file manager gráfico
     vesktop           # cliente Discord (fork com patches Wayland)
