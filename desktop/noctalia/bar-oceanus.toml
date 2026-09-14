@@ -1,0 +1,129 @@
+# =============================================================================
+# OCEANUS — Noctalia bar configuration
+# Barra: fina, discreta, técnica
+# Layout: [ OCEANUS ] [ tags ]         [ cpu | net | vol ]  HH:MM
+# =============================================================================
+
+config_version = 13
+
+[bar]
+order = [ "OCEANUS", "Minimal" ]
+
+    # -----------------------------------------------------------------------
+    # OCEANUS bar — barra principal do projeto
+    # -----------------------------------------------------------------------
+    [bar.OCEANUS]
+    enabled       = true
+    position      = "bottom"
+    thickness     = 26
+    padding       = 4
+    radius        = 0
+    shadow        = false
+    capsule_radius = 0
+    concave_edge_corners = false
+    margin_ends   = 0
+
+    start  = [ "oceanus_label", "workspaces" ]
+    center = []
+    end    = [ "cpu", "network", "volume", "clock", "tray" ]
+
+    [bar.OCEANUS.dead_zone.actions]
+    scroll_down = "exec mmsg dispatch viewtoright,0"
+    scroll_up   = "exec mmsg dispatch viewtoleft,0"
+
+    # -----------------------------------------------------------------------
+    # Minimal — barra de fallback sem customização
+    # -----------------------------------------------------------------------
+    [bar.Minimal]
+    enabled  = false
+    position = "bottom"
+    start    = [ "workspaces" ]
+    center   = []
+    end      = [ "clock" ]
+
+# =============================================================================
+# WIDGETS
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Label OCEANUS — identidade da barra
+# ---------------------------------------------------------------------------
+[widgets.oceanus_label]
+type    = "text"
+content = "OCEANUS"
+padding = 6
+
+[widgets.oceanus_label.style]
+font_family = "monospace"    # será substituída pela fonte técnica na Fase 4
+font_size   = 10
+color       = "muted"        # AAB7AF — discreta
+letter_spacing = 2
+
+# ---------------------------------------------------------------------------
+# Workspaces — tags 1-9
+# ---------------------------------------------------------------------------
+[widgets.workspaces]
+type             = "workspaces"
+show_empty       = false        # não mostrar tags sem janelas
+show_name        = false        # mostrar número, não nome
+active_indicator = "underline"  # indicador limpo, sem pill/blob
+padding          = 4
+
+[widgets.workspaces.style]
+font_size   = 10
+font_family = "monospace"
+
+# ---------------------------------------------------------------------------
+# CPU — uso breve, sem gráficos
+# ---------------------------------------------------------------------------
+[widgets.cpu]
+type    = "cpu"
+format  = "CPU {percent}%"
+padding = 4
+
+[widgets.cpu.style]
+font_size   = 10
+color       = "muted"
+
+# ---------------------------------------------------------------------------
+# Network — status de rede
+# ---------------------------------------------------------------------------
+[widgets.network]
+type   = "network"
+format = "NET {ssid}"
+padding = 4
+
+[widgets.network.style]
+font_size = 10
+color     = "muted"
+
+# ---------------------------------------------------------------------------
+# Volume — nível de áudio
+# ---------------------------------------------------------------------------
+[widgets.volume]
+type    = "volume"
+format  = "VOL {percent}%"
+padding = 4
+
+[widgets.volume.style]
+font_size = 10
+color     = "muted"
+
+# ---------------------------------------------------------------------------
+# Clock — hora simples
+# ---------------------------------------------------------------------------
+[widgets.clock]
+type    = "clock"
+format  = "%H:%M"
+padding = 6
+
+[widgets.clock.style]
+font_size = 10
+color     = "on_surface"
+
+# ---------------------------------------------------------------------------
+# Tray — ícones de sistema
+# ---------------------------------------------------------------------------
+[widgets.tray]
+type    = "tray"
+padding = 4

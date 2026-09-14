@@ -1,0 +1,42 @@
+# =============================================================================
+# OCEANUS — Paleta Noctalia
+# Baseada na especificação OCEANUS §9
+#
+# Famílias:
+#   Base    — oceano profundo
+#   Orgânico — floresta/musgo
+#   Luz     — papel envelhecido
+#   Acentos — instrumentos retro-futuristas
+# =============================================================================
+
+[palette]
+
+# --- Base: oceano profundo ---
+background       = "#07141A"   # Abyss     — fundo principal
+surface          = "#0B2029"   # Deep Blue — superfícies elevadas (cards, panels)
+surface_variant  = "#10343A"   # Petrol    — variante de superfície
+surface_high     = "#164B55"   # Ocean     — hover / focus highlight
+
+# --- Orgânico: floresta ---
+# Usados para estados de sucesso, indicadores, bordas de foco
+green            = "#526B4B"   # Fern
+green_dim        = "#394B36"   # Moss
+teal             = "#2E5547"   # Seaweed
+pine             = "#21372B"   # Pine
+
+# --- Luz: papel / pintura ---
+on_background    = "#D8D1B8"   # Parchment — texto principal sobre fundo
+on_surface       = "#E3DDC9"   # Bone      — texto sobre superfícies
+muted            = "#AAB7AF"   # Mist      — texto secundário, labels, timestamps
+
+# --- Acentos: instrumentos ---
+accent           = "#8EBFAF"   # Seafoam   — acento primário (focus ring, links)
+accent_secondary = "#B9784A"   # Copper    — acento secundário (badges, alerts)
+warning          = "#C79B52"   # Amber     — avisos, highlights
+error            = "#8D5C4C"   # Oxide     — erros, estados críticos
+
+# --- Derivados funcionais (mantidos para compatibilidade Noctalia) ---
+primary          = "#8EBFAF"   # = Seafoam
+on_primary       = "#07141A"   # texto sobre primary
+secondary        = "#526B4B"   # = Fern
+on_secondary     = "#D8D1B8"   # texto sobre secondary

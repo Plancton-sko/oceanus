@@ -1,0 +1,128 @@
+# =============================================================================
+# OCEANUS — Starship prompt
+# Conceito: [OCEANUS] dir  branch  status
+# Sem símbolos excessivos. Técnico, legível, discreto.
+# =============================================================================
+
+# Formato geral
+format = """
+$directory\
+$git_branch\
+$git_status\
+$cmd_duration\
+$line_break\
+$character"""
+
+# Prompt à direita (informações de contexto)
+right_format = """$status$jobs"""
+
+# Sem nova linha no início
+add_newline = false
+
+# ---------------------------------------------------------------------------
+# Diretório
+# ---------------------------------------------------------------------------
+[directory]
+format            = "[$path]($style) "
+style             = "fg:#8ebfaf"             # Seafoam
+truncation_length = 3
+truncate_to_repo  = true
+read_only         = " ⊘"
+read_only_style   = "fg:#8d5c4c"             # Oxide
+
+[directory.substitutions]
+"~" = "~"
+
+# ---------------------------------------------------------------------------
+# Git
+# ---------------------------------------------------------------------------
+[git_branch]
+format = "[$branch]($style) "
+style  = "fg:#aab7af"                        # Mist — discreto
+symbol = ""                                  # sem símbolo extra
+
+[git_status]
+format    = "[$all_status$ahead_behind]($style) "
+style     = "fg:#c79b52"                     # Amber — atenção
+modified  = "●"
+untracked = "○"
+staged    = "+"
+deleted   = "✖"
+renamed   = "»"
+ahead     = "↑"
+behind    = "↓"
+diverged  = "⇕"
+
+# ---------------------------------------------------------------------------
+# Duração de comando — só quando relevante
+# ---------------------------------------------------------------------------
+[cmd_duration]
+min_time          = 2000   # mostrar somente se > 2 segundos
+format            = "[$duration]($style) "
+style             = "fg:#aab7af"             # Mist
+
+# ---------------------------------------------------------------------------
+# Character — prompt indicator
+# ---------------------------------------------------------------------------
+[character]
+success_symbol = "[❯](fg:#8ebfaf)"          # Seafoam — sucesso
+error_symbol   = "[❯](fg:#8d5c4c)"          # Oxide — erro
+
+# ---------------------------------------------------------------------------
+# Status (right prompt — só em erro)
+# ---------------------------------------------------------------------------
+[status]
+disabled = false
+format   = "[$status]($style) "
+style    = "fg:#8d5c4c"                      # Oxide
+
+# ---------------------------------------------------------------------------
+# Jobs (background jobs)
+# ---------------------------------------------------------------------------
+[jobs]
+symbol    = "⚙"
+format    = "[$symbol$number]($style) "
+style     = "fg:#c79b52"                     # Amber
+threshold = 1
+
+# ---------------------------------------------------------------------------
+# Módulos desabilitados — sem ruído visual
+# ---------------------------------------------------------------------------
+[package]
+disabled = true
+
+[nodejs]
+disabled = true
+
+[python]
+disabled = true
+
+[rust]
+disabled = true
+
+[golang]
+disabled = true
+
+[docker_context]
+disabled = true
+
+[aws]
+disabled = true
+
+[gcloud]
+disabled = true
+
+[kubernetes]
+disabled = true
+
+[terraform]
+disabled = true
+
+[username]
+disabled = true
+
+[hostname]
+disabled = true
+
+[time]
+disabled = true

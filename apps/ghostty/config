@@ -1,0 +1,76 @@
+# =============================================================================
+# OCEANUS — Ghostty terminal config
+# Estética: oceano profundo, texto Parchment, sem blur, sem transparência
+# "Uma máquina funcional, não uma vitrine."
+# =============================================================================
+
+# ---------------------------------------------------------------------------
+# Cores — paleta OCEANUS
+# ---------------------------------------------------------------------------
+background = #07141a          # Abyss
+foreground = #d8d1b8          # Parchment
+
+cursor-color     = #8ebfaf    # Seafoam
+cursor-opacity   = 1.0
+
+selection-background = #164b55    # Ocean
+selection-foreground = #d8d1b8    # Parchment
+
+# Cores ANSI — mapeadas para a paleta OCEANUS
+palette = 0=#07141a           # black       → Abyss
+palette = 1=#8d5c4c           # red         → Oxide
+palette = 2=#526b4b           # green       → Fern
+palette = 3=#c79b52           # yellow      → Amber
+palette = 4=#164b55           # blue        → Ocean
+palette = 5=#8ebfaf           # magenta     → Seafoam
+palette = 6=#2e5547           # cyan        → Seaweed
+palette = 7=#d8d1b8           # white       → Parchment
+palette = 8=#10343a           # bright black  → Petrol
+palette = 9=#b9784a           # bright red    → Copper
+palette = 10=#394b36          # bright green  → Moss
+palette = 11=#c79b52          # bright yellow → Amber (same)
+palette = 12=#8ebfaf          # bright blue   → Seafoam
+palette = 13=#aab7af          # bright magenta → Mist
+palette = 14=#2e5547          # bright cyan   → Seaweed (same)
+palette = 15=#e3ddc9          # bright white  → Bone
+
+# ---------------------------------------------------------------------------
+# Fonte
+# Fase 1: fonte mono do sistema como fallback.
+# Fase 4: substituir por fonte técnica OCEANUS.
+# ---------------------------------------------------------------------------
+font-family = "monospace"
+font-size   = 13
+
+# ---------------------------------------------------------------------------
+# Janela
+# ---------------------------------------------------------------------------
+window-padding-x = 10
+window-padding-y = 8
+
+# Sem transparência — terminal como máquina, não como decoração
+background-opacity = 1.0
+background-blur    = false
+
+# ---------------------------------------------------------------------------
+# Cursor
+# ---------------------------------------------------------------------------
+cursor-style           = bar
+cursor-style-blink     = false
+
+# ---------------------------------------------------------------------------
+# Shell — Fish
+# Ghostty detecta automaticamente pelo defaultUserShell.
+# Forçar explicitamente se necessário:
+# command = fish
+# ---------------------------------------------------------------------------
+
+# ---------------------------------------------------------------------------
+# Misc
+# ---------------------------------------------------------------------------
+scrollback-limit  = 10000
+mouse-hide-while-typing = true
+copy-on-select    = false
+
+# Desabilitar decorações da janela (Mango gerencia bordas)
+window-decoration = false
