@@ -1,0 +1,20 @@
+# Theme Preset: Floresta (Botanical Forest)
+# Estética: Samambaia, musgo denso, pinho abissal, terra úmida e folha dourada
+
+[theme]
+name = "floresta"
+description = "Paleta baseada em expedições botânicas, floresta úmida e líquens"
+
+[palette]
+background = "#0c120c"
+surface = "#162116"
+text = "#d0d9cd"
+subtext = "#8f9e8a"
+
+primary = "#426b38"      # Verde floresta / Samambaia
+secondary = "#688f58"    # Verde musgo claro
+accent = "#a88e4d"       # Folhagem outonal / Líquen dourado
+warning = "#b87035"      # Casca de árvore / Argila
+error = "#b54343"        # Baga silvestre
+
+border = "#233822"

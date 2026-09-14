@@ -1,0 +1,20 @@
+# Preserved OCEANUS Base Theme Palette
+# Estética: Oceano profundo, texto pergaminho, musgo, cobre e âmbar
+
+[theme]
+name = "oceanus-base"
+description = "Paleta original do projeto OCEANUS (Retro-futurismo oceânico e botânico)"
+
+[palette]
+background = "#0a1214"
+surface = "#101d20"
+text = "#d4ceb8"
+subtext = "#a3a092"
+
+primary = "#3b6f63"      # Musgo / Fern
+secondary = "#8f6a42"    # Cobre / Equipamento antigo
+accent = "#c79b52"       # Âmbar / Telemetria
+warning = "#b9784a"      # Óxido / Cobre envelhecido
+error = "#a84e4e"        # Alerta vermelho desaturado
+
+border = "#1c3236"

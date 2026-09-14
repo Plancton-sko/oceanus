@@ -1,0 +1,20 @@
+# Theme Preset: Pinturas Clássicas (Classic Botanical & Nautical Art)
+# Estética: Gravuras de história natural, cartas náuticas antigas, tela a óleo desaturada, ocre e vermelho vênito
+
+[theme]
+name = "pinturas-classicas"
+description = "Paleta inspirada em ilustrações científicas históricas, pergaminhos e mapas clássicos"
+
+[palette]
+background = "#14110f"
+surface = "#211c19"
+text = "#dfd5c6"
+subtext = "#a39786"
+
+primary = "#8c6d46"      # Ocre queimado / Telas a óleo
+secondary = "#667a65"    # Pigmento vegetal envelhecido
+accent = "#b8864b"       # Ouro antigo / Pergaminho ilustrado
+warning = "#a65b32"      # Terracota / Pigmento terra
+error = "#9e3b3b"        # Vermelho vênito desaturado
+
+border = "#332b26"

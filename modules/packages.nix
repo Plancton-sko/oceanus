@@ -37,12 +37,14 @@
     grim              # screenshot (usado pelos scripts do Mango)
     slurp             # seleção de região para screenshot
     swappy            # editor de screenshot rápido
+    matugen           # gerador dinâmico de cores baseadas no wallpaper
+
 
     # -----------------------------------------------------------------
     # Desktop — aplicações principais
     # -----------------------------------------------------------------
-    brave             # browser principal
-    # firefox         # alternativa — programs.firefox.enable = true no host
+    #brave             # browser principal
+    firefox         # alternativa — programs.firefox.enable = true no host
 
     nautilus          # file manager gráfico
     vesktop           # cliente Discord (fork com patches Wayland)

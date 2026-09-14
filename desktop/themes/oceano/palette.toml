@@ -1,0 +1,20 @@
+# Theme Preset: Oceano (Deep Ocean)
+# Estética: Abissal marinho, azul-escuro profundo, ciano marinho e espuma do mar
+
+[theme]
+name = "oceano"
+description = "Paleta inspirada na fossa abissal e nas profundezas marinhas"
+
+[palette]
+background = "#050b14"
+surface = "#0c1726"
+text = "#c5d7e8"
+subtext = "#7f9bb3"
+
+primary = "#185a7d"      # Azul oceânico profundo
+secondary = "#3282a8"    # Ciano marinho
+accent = "#5eb1bf"       # Espuma do mar / Seafoam
+warning = "#d99b26"      # Sinalizador náutico
+error = "#c94a4a"        # Alerta de pressão
+
+border = "#132c40"

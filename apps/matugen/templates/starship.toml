@@ -1,0 +1,23 @@
+# Matugen template for Starship prompt
+
+add_newline = false
+
+format = """
+[ OCEANUS ](bold {{colors.primary.default.hex}}) $directory$git_branch$git_status$character
+"""
+
+[directory]
+style = "bold {{colors.secondary.default.hex}}"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[git_branch]
+symbol = " "
+style = "bold {{colors.tertiary.default.hex}}"
+
+[git_status]
+style = "{{colors.error.default.hex}}"
+
+[character]
+success_symbol = "[❯](bold {{colors.primary.default.hex}})"
+error_symbol = "[❯](bold {{colors.error.default.hex}})"

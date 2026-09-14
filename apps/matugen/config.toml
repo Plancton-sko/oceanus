@@ -1,0 +1,18 @@
+[config]
+# Configuração do Matugen para o projeto OCEANUS
+
+[templates.ghostty]
+input_path = '~/.config/matugen/templates/ghostty.config'
+output_path = '~/.config/ghostty/config'
+
+[templates.starship]
+input_path = '~/.config/matugen/templates/starship.toml'
+output_path = '~/.config/starship/starship.toml'
+
+[templates.noctalia]
+input_path = '~/.config/matugen/templates/noctalia.toml'
+output_path = '~/.config/noctalia/palettes/dynamic.toml'
+
+[templates.colors_css]
+input_path = '~/.config/matugen/templates/colors.css'
+output_path = '~/.config/gtk-3.0/colors.css'
