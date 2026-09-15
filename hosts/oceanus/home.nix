@@ -59,6 +59,5 @@
     "rmpc".source                             = ../../apps/rmpc;
     "matugen".source                          = ../../apps/matugen;
     "desktop/themes".source                   = ../../desktop/themes;
-    "wallpapers".source                       = ../../assets/wallpapers;
   };
 }

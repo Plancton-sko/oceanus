@@ -40,7 +40,7 @@ case "$chosen" in
         ;;
     *"Matugen"*)
         echo "Selecione um wallpaper para gerar o tema dinâmico:"
-        WALLPAPER=$(zenity --file-selection --title="Escolha o Wallpaper para o Matugen" --file-filter="Imagens (*.png *.jpg *.jpeg) | *.png *.jpg *.jpeg" 2>/dev/null)
+        WALLPAPER=$(zenity --file-selection --filename="$HOME/Pictures/Wallpapers/" --title="Escolha o Wallpaper para o Matugen" --file-filter="Imagens (*.png *.jpg *.jpeg) | *.png *.jpg *.jpeg" 2>/dev/null)
         if [ -n "$WALLPAPER" ]; then
             bash ~/.config/mango/scripts/set-wallpaper.sh "$WALLPAPER" dynamic
         fi
