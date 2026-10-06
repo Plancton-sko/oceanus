@@ -1,0 +1,76 @@
+decorations:
+  border:
+    size 2
+    radius 0
+    colour-focused "{{colors.primary.default.hex}}"
+    colour-unfocused "{{colors.outline_variant.default.hex}}"
+  end
+
+  secondary-border:
+    enabled true
+    size 4
+    gap 0
+    colour-focused "{{colors.tertiary.default.hex}}"
+    colour-unfocused "{{colors.surface_container.default.hex}}"
+  end
+
+  resize-using-border true
+end
+
+# Cuadrado todo: nodos, labels de nodos y cores de clusters.
+node:
+  node-shape "square"
+  node-label-shape "square"
+  background-colour "{{colors.surface_variant.default.hex}}"
+
+  border-colour-hover "use-window-active"
+  border-colour-inactive "use-window-inactive"
+end
+
+clusters:
+  core-shape "square"
+end
+
+overlays:
+  radius 0
+  borders true
+  background-colour "{{colors.surface.default.hex}}"
+  text-colour "{{colors.on_surface.default.hex}}"
+  error-colour "{{colors.error.default.hex}}"
+end
+
+field:
+  pins:
+    colour "{{colors.on_primary.default.hex}}"
+    background-colour "{{colors.primary.default.hex}}"
+  end
+end
+
+# Sin fondo animado ni shader: modo "none" y estatico.
+wallpaper:
+  mode "none"
+  colour "{{colors.surface.default.hex}}"
+  accent-colour "{{colors.tertiary.default.hex}}"
+  animated false
+end
+
+effects:
+  blur:
+    enabled false
+  end
+
+  shadows:
+    window:
+      enabled true
+      colour "{{colors.shadow.default.hex}}"
+    end
+    node:
+      enabled true
+      colour "{{colors.shadow.default.hex}}"
+    end
+    overlay:
+      enabled true
+      colour "{{colors.shadow.default.hex}}"
+    end
+  end
+end
