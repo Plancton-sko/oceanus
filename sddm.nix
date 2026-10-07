@@ -20,5 +20,6 @@ in {
     extraPackages = [ sddm-theme ];
     wayland.enable = true;
   };
+  services.displayManager.defaultSession = "niri";
 }
 

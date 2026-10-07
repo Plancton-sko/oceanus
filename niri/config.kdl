@@ -66,11 +66,12 @@ layer-rule {
   match namespace="^noctalia-overview*"
   place-within-backdrop true
 }
-overview {
-    workspace-shadow {
-        off
-    }
-}
+// Block overview commented out - not a valid top-level Niri node
+// overview {
+//     workspace-shadow {
+//         off
+//     }
+// }
 
 spawn-at-startup "bash" "-c" "wl-paste --watch cliphist store &"
 spawn-at-startup "noctalia-shell"
@@ -80,13 +81,13 @@ spawn-at-startup "lxqt-policykit-agent"
 environment {
   // XDG_CURRENT_DESKTOP estava duplicado (qt6ct e niri) - mantendo apenas niri
   XDG_CURRENT_DESKTOP "niri"
-  QT_QPA_PLATFORM "wayland:xcb"
+  QT_QPA_PLATFORM "wayland"
   ELECTRON_OZONE_PLATFORM_HINT "auto"
   QT_QPA_PLATFORMTHEME "qt6ct"
   // SQL_VIDEODRIVER era um typo - corrigido para SDL_VIDEODRIVER
   SDL_VIDEODRIVER "wayland"
   _JAVA_AWT_WM_NONREPARENTING "1"
-  DISPLAY ":0"
+  // DISPLAY ":0" // removido para não forçar socket X11 fixo no Wayland
   // XWAYLAND_ENABLE não é uma variável válida - xwayland é gerenciado pelo xwayland-satellite
 }
 hotkey-overlay {

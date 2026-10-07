@@ -4,7 +4,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
-       ./sddm.nix
+    #   ./sddm.nix
    #   ./kde.nix
    #   ./gnome.nix
     ];
@@ -113,6 +113,7 @@
   programs.firefox.enable = true; 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
   programs.niri.enable = true; 
+  environment.etc."niri/config.kdl".source = ./niri/config.kdl; 
   programs.gamemode.enable = true;
   programs.fish.enable = true;
   users.defaultUserShell = pkgs.fish;
