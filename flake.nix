@@ -41,8 +41,9 @@
   };
 
   outputs = { self, nixpkgs, ... }@inputs: {
-    nixosConfigurations.nixos = nixpkgs.lib.nixosSystem {
-      system = "x86_64-linux";
+    # O nome aqui (oceanus) é o que você usa no nixos-rebuild: --flake .#oceanus
+    nixosConfigurations.oceanus = nixpkgs.lib.nixosSystem {
+      system = "x86_64-linux"; # troque para "aarch64-linux" se for ARM
       specialArgs = { inherit inputs; };
 
       modules = [

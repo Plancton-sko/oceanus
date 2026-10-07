@@ -11,7 +11,10 @@
     fd            # find mais rápido
 
     # Fontes extras
-    (nerdfonts.override { fonts = [ "JetBrainsMono" "Iosevka" ]; })
+    # NOTA: Em nixpkgs-unstable o nerdfonts.override foi removido.
+    # Cada fonte agora é um pacote separado:
+    nerd-fonts.jetbrains-mono
+    nerd-fonts.iosevka
 
   ];
 }

@@ -92,14 +92,13 @@
     # Drivers para AMD (RADV é o driver Vulkan open-source recomendado)
     extraPackages = with pkgs; [
       libva
-      amdvlk            # driver Vulkan da AMD
       mesa              # inclui radeonsi (OpenGL) e RADV (Vulkan)
       rocmPackages.clr  # OpenCL para AMD
     ];
     # Suporte 32-bit para Steam/Wine/Proton
     extraPackages32 = with pkgs.pkgsi686Linux; [
       libva
-      amdvlk
+      mesa
     ];
   };
   programs.dconf.enable = true;
@@ -128,7 +127,7 @@
    pkgs.xdg-desktop-portal-gnome
    pkgs.gpu-screen-recorder
    kdePackages.layer-shell-qt
-   pkgs.libsForQt5.qt5.qtmultimedia
+   # pkgs.libsForQt5.qt5.qtmultimedia  # removido: deprecated Qt5, usar kdePackages.qtmultimedia abaixo
    pkgs.kdePackages.qtbase
    pkgs.kdePackages.qtwayland
    pkgs.yazi
@@ -157,7 +156,7 @@
    pkgs.unrar
    pkgs.heroic 
    pkgs.lutris
-   pkgs.wineWowPackages.stagingFull
+   pkgs.wineWow64Packages.stagingFull
    pkgs.xorg.xvfb
    starship
    glib 
@@ -173,16 +172,15 @@
    vulkan-tools
    wl-clipboard
    wayland-utils
-   mesa 
-   fish
+   # mesa já incluído em hardware.graphics.extraPackages
+   # fish já incluído via programs.fish.enable = true
    brave
    cava
    nitch
-   # xfce.thunar
-   niri
-   flatpak
+   # niri já incluído via programs.niri.enable = true (removida duplicata)
+   # flatpak já incluído via services.flatpak.enable = true
    git
-   fastfetch 
+   fastfetch
    vim
    vesktop
    wget
@@ -190,12 +188,12 @@
    dconf
    libsForQt5.qt5ct
    kdePackages.qt6ct
-   kdePackages.qtwayland
-   gsettings-qt 
-   nwg-look 
+   # kdePackages.qtwayland já listado acima (removida duplicata)
+   gsettings-qt
+   nwg-look
    gsettings-desktop-schemas
-   xsettingsd 
-   gtk-engine-murrine 
+   xsettingsd
+   gtk-engine-murrine
    adwaita-icon-theme
    material-symbols
    adw-gtk3
@@ -203,12 +201,21 @@
 
   ];
   boot.plymouth = {
-            enable = true;
+    enable = true;
 
-            themePackages = [ pkgs.mikuboot ];
-            theme = "mikuboot";
- 
-    };
+    # Tema alternativo: mikuboot (via flake input, comentado por enquanto)
+    # themePackages = [ pkgs.mikuboot ];
+    # theme = "mikuboot";
+
+    # Tema atual: Lone, do pack adi1090x-plymouth-themes
+    # https://github.com/adi1090x/plymouth-themes
+    themePackages = [
+      (pkgs.adi1090x-plymouth-themes.override {
+        selected_themes = [ "lone" ]; # instala só o tema lone, não a coleção inteira
+      })
+    ];
+    theme = "lone";
+  };
 
   system.stateVersion = "25.05";     
 

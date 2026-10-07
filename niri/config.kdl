@@ -75,15 +75,16 @@ spawn-at-startup "noctalia-shell"
 // Adicione pkgs.lxqt.lxqt-policykit em configuration.nix se ainda não estiver
 spawn-at-startup "lxqt-policykit-agent"
 environment {
-  XDG_CURRENT_DESKTOP "qt6ct"
+  // XDG_CURRENT_DESKTOP estava duplicado (qt6ct e niri) - mantendo apenas niri
   XDG_CURRENT_DESKTOP "niri"
   QT_QPA_PLATFORM "wayland:xcb"
   ELECTRON_OZONE_PLATFORM_HINT "auto"
   QT_QPA_PLATFORMTHEME "qt6ct"
-  SQL_VIDEODRIVER "wayland"
+  // SQL_VIDEODRIVER era um typo - corrigido para SDL_VIDEODRIVER
+  SDL_VIDEODRIVER "wayland"
   _JAVA_AWT_WM_NONREPARENTING "1"
   DISPLAY ":0"
-  XWAYLAND_ENABLE "0"
+  // XWAYLAND_ENABLE não é uma variável válida - xwayland é gerenciado pelo xwayland-satellite
 }
 hotkey-overlay {
     skip-at-startup
