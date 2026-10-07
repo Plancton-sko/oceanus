@@ -4,9 +4,12 @@ cursor {
     xcursor-theme "Adwaita"
     xcursor-size 24
 }
-config-notification {
-    disable-failed
-}
+// config-notification removido para expor erros de parse.
+// Se o niri mostrar notificações de erro na tela, é isso que está
+// impedindo as binds de funcionar. Reative depois de corrigir os erros:
+// config-notification {
+//     disable-failed
+// }
 // Outputs from existing configuration
 /-output "eDP-2" {
     mode "2560x1600@239.998993"

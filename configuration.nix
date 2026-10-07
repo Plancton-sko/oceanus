@@ -193,7 +193,6 @@
    nwg-look
    gsettings-desktop-schemas
    xsettingsd
-   gtk-engine-murrine
    adwaita-icon-theme
    material-symbols
    adw-gtk3

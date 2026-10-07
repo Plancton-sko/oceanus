@@ -27,10 +27,11 @@
 #      inputs.nixpkgs.follows = "nixpkgs";
 #    };
 
-    silentSDDM = {
-      url = "github:uiriansan/SilentSDDM";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    # silentSDDM trocado por pkgs.sddm-astronaut (pixel_sakura) — input não mais necessário
+    # silentSDDM = {
+    #   url = "github:uiriansan/SilentSDDM";
+    #   inputs.nixpkgs.follows = "nixpkgs";
+    # };
 
     elyprismlauncher.url = "github:ElyPrismLauncher/ElyPrismLauncher/10.0.2";
 
