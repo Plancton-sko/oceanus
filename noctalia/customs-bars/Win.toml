@@ -828,16 +828,16 @@ wallpaper_scheme = "soft"
     community_ids = [ "opencode", "discord", "zed" ]
 
 [wallpaper]
-directory = "/home/miku/wallpapers"
+directory = "/home/plancton/wallpapers"
 
     [wallpaper.default]
-    path = "/home/miku/wallpapers/Kemuri Susu/Oil Paintings/wallhaven-je9wow_1920x1080.png"
+    path = "/home/plancton/wallpapers/default.png"
 
     [wallpaper.last]
-    path = "/home/miku/wallpapers/Kemuri Susu/Oil Paintings/wallhaven-je9wow_1920x1080.png"
+    path = "/home/plancton/wallpapers/default.png"
 
     [wallpaper.monitors.HDMI-A-1]
-    path = "/home/miku/wallpapers/Kemuri Susu/Oil Paintings/wallhaven-je9wow_1920x1080.png"
+    path = "/home/plancton/wallpapers/default.png"
 
     [wallpaper.monitors.VGA-1]
     path = "/usr/share/backgrounds/moony-art3.png"

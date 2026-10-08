@@ -14,12 +14,20 @@ in {
   environment.systemPackages = [ sddm-theme ];
   qt.enable = true;
   services.displayManager.sddm = {
-    package = pkgs.kdePackages.sddm; # qt6
+    package = pkgs.kdePackages.sddm;
     enable = true;
     theme = "sddm-astronaut-theme";
-    extraPackages = [ sddm-theme ];
+    extraPackages = with pkgs.kdePackages; [
+      sddm-theme
+      qtsvg
+      qtmultimedia
+      qtwayland
+    ];
     wayland.enable = true;
   };
+  services.displayManager.sessionPackages = [
+    pkgs.niri
+  ];
   services.displayManager.defaultSession = "niri";
 }
 

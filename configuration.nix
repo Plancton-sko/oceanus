@@ -89,16 +89,9 @@
 
   hardware.graphics = {
     enable = true;
-    # Drivers para AMD (RADV é o driver Vulkan open-source recomendado)
+    enable32Bit = true; # Suporte 32-bit limpo para Steam/Wine/Proton
     extraPackages = with pkgs; [
-      libva
-      mesa              # inclui radeonsi (OpenGL) e RADV (Vulkan)
       rocmPackages.clr  # OpenCL para AMD
-    ];
-    # Suporte 32-bit para Steam/Wine/Proton
-    extraPackages32 = with pkgs.pkgsi686Linux; [
-      libva
-      mesa
     ];
   };
   programs.dconf.enable = true;
@@ -146,13 +139,13 @@
    #kdePackages.kirigami-addons
    #pkgs.libsForQt5.kirigami2
    #pkgs.kdePackages.kirigami
-   pkgs.xdg-desktop-portal-wlr 
+   # pkgs.xdg-desktop-portal-wlr (removido: Niri não usa portal wroots)
    pkgs.kdePackages.qtmultimedia
    papirus-icon-theme
    pkgs.nautilus
    pkgs.spicetify-cli
    pkgs.spotify
-   pkgs.xdg-desktop-portal
+   # pkgs.xdg-desktop-portal
    pkgs.p7zip
    pkgs.unrar
    pkgs.heroic 
@@ -211,7 +204,7 @@
     # https://github.com/adi1090x/plymouth-themes
     themePackages = [
       (pkgs.adi1090x-plymouth-themes.override {
-        selected_themes = [ "lone" ]; # instala só o tema lone, não a coleção inteira
+        selected_themes = [ "lone" ];
       })
     ];
     theme = "lone";
