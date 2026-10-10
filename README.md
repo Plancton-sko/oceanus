@@ -14,3 +14,7 @@ sudo chmod u+rw ~/.config -R
 ![preview 2](preview/preview.png)
 ![preview 3](preview/preview1.png)
 ![preview 4](preview/preview2.png)
+
+Not my dotfile!
+
+[Original dotfile!](https://github.com/mikuri12/my-nixos-config)
